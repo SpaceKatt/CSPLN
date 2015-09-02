@@ -1,0 +1,1 @@
+{'name': 'M2JT0000', 'file': '..\\images\\processed_images\\M2JT0000\\M2JT0000', 'md5': 'cf2f43633249c0cc783bca785b519686', 'tif_parent_md5': '729070670d01112eef7784ecf4739b0d', 'size_tiff_parent': 30374788, 'size': 9011651}
