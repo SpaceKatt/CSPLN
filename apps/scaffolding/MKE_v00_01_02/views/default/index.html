@@ -1,0 +1,16 @@
+{{extend 'layout.html'}}
+<h1>
+    The Mary Keeler Edition (Pre-Alpha - Early Test)
+</h1>
+<h2>CSP Logic Notebook Page Images</h2>
+<p>
+    Please do not use this web aplication for extensive work - this version is just a distribution test.  If you would like other test copies or notification when the application is ready for use, please contact Mary Keeler (could put a google group email in here)</p>
+</p>
+
+<ul>
+    {{ N = 0 }}
+    {{for image in images:}}
+    {{ N = N + 1 }}
+    Page Number : {{ =image_number + N}} {{ =LI(A(image.name, _href=URL("show", args=image.id))) }}
+    {{pass}}
+</ul>

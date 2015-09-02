@@ -1,0 +1,23 @@
+{{extend 'layout.html'}}
+<h1>
+    The Mary Keeler Edition (Pre-Alpha - Early Test)
+</h1>
+<p>
+    Please do not use this web aplication for extensive work - this version is just a distribution test.  If you would like other test copies or notification when the application is ready for use, please contact Mary Keeler (could put a google group email in here)</p>
+</p>
+
+<h2>CSP Logic Notebook Page: {{=image.name}}</h2>
+<div style="text-align:center">
+<img width="600px"
+     src="{{=URL('download', args=image.file)}}" />
+</div>
+{{if len(posts):}}
+  <h2>Posts</h2><br /><p>
+  {{for note in posts:}}
+    <p>{{note.user_id}} contributed <i>{{=note.body_text}}</i></p>
+  {{pass}}</p>
+{{else:}}
+<h2>No image notes provided yet.</h2>
+{{pass}}
+<h2>Create a note</h2>
+{{=form}}
