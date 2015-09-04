@@ -42,9 +42,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os, sys, shutil
 
-num_apps = 10
-version = '00_01_02'
-
 def check_file_exist(path):
     if os.path.exists(path):
         print path, 'exists!'
@@ -62,7 +59,7 @@ def grab_out_paths(num_apps):
     return out_paths
 
 def grab_web2py_frame():
-    webframe = '..\\apps\\scaffolding\\web2py'
+    webframe = '..\\apps\\scaffolding\\windows\\web2py'
     webdotpy = '..\\apps\\scaffolding\\common\\web2py.py'
     check_file_exist(webdotpy)
     check_file_exist(webframe)
@@ -143,4 +140,7 @@ def deploy_scaffolding(version, num_apps):
     copy_app(version, new_paths)
     return None
 
-deploy_scaffolding(version, num_apps)
+if __name__ == "__main__":
+    num_apps = 10
+    version = '00_01_02'
+    deploy_scaffolding(version, num_apps)

@@ -91,4 +91,5 @@ def update_readme():
     readme_text = note + readme_text
     write_readme(readme_text)
 
-update_readme()
+if __name__ == "__main__":
+    update_readme()

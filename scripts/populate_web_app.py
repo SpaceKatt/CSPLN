@@ -1,12 +1,12 @@
 '''
-THIS SCRIPT DOESN'T WORK! (yet)
-
 Description:
     Populates single web_app with images,
         use interactive python environment w/web2py.
     Will be used by another module 'x', module 'x' will decide
         how_many_apps to create and how_many_images_per_app, which will
         determine how 'x' calls populate_web_app.
+    Saves generated cmds to './populators', which are run in an environment
+        which is populated by the db objects of the corresponding web_app.
 
 Inputs:
     Specific images in '..\\image\\processed_images'
@@ -16,12 +16,8 @@ Outputs:
     Populated database in specified web_app.
 
 Currently:
-    Find way to pass generated commands to interpreter spawned from
-        running web2py.py scripts to interact with web_app.
-            Asked question on stackoverflow.
 
 To Do:
-    Verify database gets populated correctly.
 
 Done:
     Gather all relevant image information in a dictionary:
@@ -33,6 +29,11 @@ Done:
         specifically from an interactive python shell.
         Will look like:
             db.image.insert(SOMETHING)
+    Verify database gets populated correctly.
+    Find way to pass generated commands to interpreter spawned from
+        running web2py.py scripts to interact with web_app.
+            Asked question on stackoverflow. (answered by Anthony)
+
 '''
 '''
 CSPLN_MaryKeelerEdition; Manages images to which notes can be added.
@@ -54,20 +55,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 
-which_app = 'P5'
-which_images = ['..\\images\\processed_images\\M2JT0000\\M2JT0000.png',
-                '..\\images\\processed_images\\M2JT0001\\M2JT0001.png',
-                '..\\images\\processed_images\\M2JT0002\\M2JT0002.png'
-                ]
-
-which_im = ['M2JT0000', 'M2JT0001']
-
 def check_file_exist(path):
     if os.path.exists(path):
         print path, 'exists!'
     else:
         sys.exit('File {} doesn\'t exist'.format(path))
     return None
+
+def create_dirs(out_path):
+    if not os.path.exists(out_path):
+	    os.makedirs(out_path)
 
 def check_images_exist(which_images):
     for path in which_images:
@@ -131,8 +128,9 @@ def create_single_cmd(image_path):
     cmd = insert_cmd.format(stuff=insert_string)
     return cmd
 
-def create_cmds(which_app, web2py_script, which_images):
-    int_cmd = 'python {} -S MKE_Static_Name -M'.format(web2py_script)
+def create_cmds(web2py_script, which_images):
+    int_cmd = 'python {web2py_s} -S MKE_Static_Name -M -R '
+    int_cmd = int_cmd.format(web2py_s=web2py_script)
     upload_cmds = []
     for image in which_images:
         cmd = create_single_cmd(image)
@@ -140,27 +138,36 @@ def create_cmds(which_app, web2py_script, which_images):
     commit_cmd = 'db.commit()'
     return int_cmd, upload_cmds, commit_cmd
 
-def pass_cmds(int_cmd, up_cmds, commit_cmd):
-    import subprocess, time
-    print int_cmd
-    #first = subprocess.Popen(int_cmd, stdin=subprocess.PIPE, shell=True)
-    #for cmd in up_cmds:
-    #    time.sleep(0.5)
-    #    first.stdin.write(cmd)
-        #print cmd
-        #first.communicate(up_cmds)
-    #print commit_cmd
-    #first.communicate(commit_cmd)
+def create_python_scripts(up_cmds, commit_cmd, which_app):
+    path_form = '.\\populators\{}_populator.py'
+    path = os.path.abspath(path_form.format(which_app))
+    create_dirs(path_form[:-15])
+    with open(path, 'w') as python_file:
+        for cmd in up_cmds:
+            python_file.write(cmd + '\n')
+        python_file.write('\n' + commit_cmd + '\n')
+    return path
+
+
+def pass_cmds(int_cmd, py_pop):
+    import subprocess
+    master_cmd = int_cmd + py_pop
+    first = subprocess.Popen(master_cmd)
+    first.communicate()
     return None
 
 def populate_web_app(which_app, which_images):
     check_images_exist(which_images)
     web2py = grab_web2py_script_path(which_app)
-    int_cmd, up_cmds, commit_cmd = create_cmds(which_app, web2py, which_images)
-    print int_cmd, '\n\n', up_cmds, '\n\n', commit_cmd
-    up_cmdsj = ["db.image.insert(md5='1689ed6f239701c7921beda212abf73f', name='M2JT0002', size=10078429, tif_parent_md5='c39828230d3436717109ab69dc3fcd30', file=open('C:\Users\Thomas\Desktop\CSPLN_Final\images\processed_images\M2JT0002\M2JT0002.png', 'rb'), size_tiff_parent=30500872)"]
-    #pass_cmds(int_cmd, up_cmds, commit_cmd)
+    int_cmd, up_cmds, commit_cmd = create_cmds(web2py, which_images)
+    py_pop = create_python_scripts(up_cmds, commit_cmd, which_app)
+    pass_cmds(int_cmd, py_pop)
     return None
 
-
-populate_web_app(which_app, which_images)
+if __name__ == "__main__":
+    which_app = 'P6'
+    which_images = ['..\\images\\processed_images\\M2JT0000\\M2JT0000.png',
+                    '..\\images\\processed_images\\M2JT0001\\M2JT0001.png',
+                    '..\\images\\processed_images\\M2JT0002\\M2JT0002.png'
+                    ]
+    populate_web_app(which_app, which_images)

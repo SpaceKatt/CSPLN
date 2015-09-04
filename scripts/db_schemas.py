@@ -38,12 +38,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os, shutil
 
-version = '00_01_02'
-in_path = '..\\apps\\scaffolding\\common\\schemes.py'
-out_path = '..\\apps\\scaffolding\\MKE_v'+version+'\\models\\db.py'
-
 def insert_db_schema(version, in_path, out_path):
     shutil.copy(in_path, out_path)
     return None
 
-insert_db_schema(version, in_path, out_path)
+if __name__ == "__main__":
+    version = '00_01_02'
+    in_path = '..\\apps\\scaffolding\\common\\schemes.py'
+    out_path = '..\\apps\\scaffolding\\MKE_v'+version+'\\models\\db.py'
+    insert_db_schema(version, in_path, out_path)

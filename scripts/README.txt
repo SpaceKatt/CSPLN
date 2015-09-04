@@ -2,14 +2,39 @@ For higher level to-do-list, see '.\story.txt'.
 
 Scope:
 
+    automate_everything.py
     create_web_apps_win.py
     db_schemas.py
+    image_path_chunk_grabber.py
     populate_web_app.py
     process_images.py
     replace_db_references.py
+    the_decider.py
     update_readme.py
+    view_change.py
 
 Details:
+
+automate_everything.py
+
+    Description:
+        Does it all! (more descriptive description later)
+    
+    Inputs:
+        All the scripts!
+        Version number of current scaffolding_app
+    
+    Outputs:
+        All the things!
+        All populated web_apps.
+        The final project output.
+    
+    Currently:
+    
+    To Do:
+        Rewrite Description, Inputs, and Outputs
+    
+    Done:
 
 create_web_apps_win.py
 
@@ -57,16 +82,35 @@ db_schemas.py
     
     Done:
 
+image_path_chunk_grabber.py
+
+    Description:
+        Grabs chunks of image_paths to be processed by other scripts.
+    
+    Inputs:
+        Amount of images_per_app
+        Processed images.
+    
+    Outputs:
+        Dictionary form {P_:[array]}, P_ referring to the specific web_app
+            arrays consisting of image_file_paths.
+    
+    Currently:
+    
+    To Do:
+    
+    Done:
+
 populate_web_app.py
 
-    THIS SCRIPT DOESN'T WORK! (yet)
-    
     Description:
         Populates single web_app with images,
             use interactive python environment w/web2py.
         Will be used by another module 'x', module 'x' will decide
             how_many_apps to create and how_many_images_per_app, which will
             determine how 'x' calls populate_web_app.
+        Saves generated cmds to './populators', which are run in an environment
+            which is populated by the db objects of the corresponding web_app.
     
     Inputs:
         Specific images in '..\image\processed_images'
@@ -76,12 +120,8 @@ populate_web_app.py
         Populated database in specified web_app.
     
     Currently:
-        Find way to pass generated commands to interpreter spawned from
-            running web2py.py scripts to interact with web_app.
-                Asked question on stackoverflow.
     
     To Do:
-        Verify database gets populated correctly.
     
     Done:
         Gather all relevant image information in a dictionary:
@@ -93,6 +133,10 @@ populate_web_app.py
             specifically from an interactive python shell.
             Will look like:
                 db.image.insert(SOMETHING)
+        Verify database gets populated correctly.
+        Find way to pass generated commands to interpreter spawned from
+            running web2py.py scripts to interact with web_app.
+                Asked question on stackoverflow. (answered by Anthony)
 
 process_images.py
 
@@ -147,6 +191,31 @@ replace_db_references.py
         Read files, search for things in need of replacement,
             do replacement, write files.
 
+the_decider.py
+
+    Description:
+        Decide how many web_apps to make,
+            and how many images should be in each.
+    Inputs:
+        Dictionaries in '../data',
+            {md5:size}
+    
+    Outputs:
+        how_many_apps
+        images_per_app
+    
+    Currently:
+    
+    To Do:
+        Add support for prime numbers of images.
+            Prime numbers of images might create an infinite loop...
+    
+    Done:
+        Take average image size.
+        Decide how many average images could fit inside a 800Mb application.
+        Decide how many applications will be nessecary to contain all
+            images based on how many images_per_app.
+
 update_readme.py
 
     Description:
@@ -166,3 +235,24 @@ update_readme.py
     
     Done:
         Update readme file with current functions&&their docstrings.
+
+view_change.py
+
+    Description:
+        Changes the 'default/index.html' view to reflect the correct
+            image numbers.
+    
+    Inputs:
+        Dictionary form {P_:[array]}, P_ referring to the specific web_app
+            arrays consisting of image_file_paths.
+        Existing web_apps with views.
+    
+    Outputs:
+        Changes the 'default/index.html' view to reflect the correct
+            image numbers.
+    
+    Currently:
+    
+    To Do:
+    
+    Done:

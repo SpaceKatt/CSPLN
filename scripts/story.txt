@@ -5,31 +5,21 @@ Current project status:
     Licensed
 
 Current activity:
-    Populate single web_app with images,
-        use interactive python environment w/web2py.
-        populate_web_app(which_app, which_images)
-        Will be used later to automatically populate all web_apps,
-            which_app and which_images should be determined from a
-            separate function.
-    Create repository for this project,
-        GitHub or BitBucket.
-        IMPORTANT! Back-up is crucial and hasn't yet been established.
+    Put smaller density *.tif files as examples on github,
+        will make app easier to download and demonstrate.
 
 To-Do:
-    Web_apps must properly display image number,
-        index.html in the 'views\\default' directory should be looked at.
     Readme, include 'story.txt' file.
         '<todolist></todolist>' style tags will help identify chunks.
-    Send Joe current file structure (without images or other deployments),
-        on 28/Aug/2015 && 30/Aug/2015.
     Python script to generate N2-charts from other python scripts,
         more details in notebook.
         (optional, not relevant to current CSPLN Project activity)
-    Python script to decide how many parts the web_app should be broken
-        up into. Memos in '..\\data' should be handy for this.
     Python script to convert 'MKE_PT_*.bat' -> '*.exe'
     Python script to insert widget.py into scaffolding,
         needed for Mac/Linux web2py packages.
+    Add support for:
+        Replicated images (non-unique md5s)
+        Prime numbers of images to be processed
 
 Done:
     CSPLN\scaffolding directory should have a subdirectory,
@@ -54,6 +44,21 @@ Done:
             (e.g., comment.page_id -> note.image_id, before comment -> note)
     Code License
         (GPL 3, is reccomended)
+    Send Joe current file structure (without images or other deployments),
+        on 28/Aug/2015 && 30/Aug/2015.
+    Populate single web_app with images,
+        use interactive python environment w/web2py.
+        populate_web_app(which_app, which_images)
+        Will be used later to automatically populate all web_apps,
+            which_app and which_images should be determined from a
+            separate function.
+    Create repository for this project,
+        GitHub or BitBucket.
+        IMPORTANT! Back-up is crucial and hasn't yet been established.
+    Python script to decide how many parts the web_app should be broken
+        up into. Memos in '..\\data' should be handy for this.
+    Web_apps must properly display image number,
+        index.html in the 'views\\default' directory should be looked at.
 
 Keep doing (for consistency):
     Have scaffolding version be a function input, this will make for
@@ -82,5 +87,22 @@ Keep doing (for consistency):
     Fixed application!
         Changed references to old databases in controllers&&views.
             see: replace_db_references.py
+
+4/Sept/2015
+    Realizing that I should be more consistent in updating this file.
+    Up to this point all of the parts needed to process images and
+        create the file structure have been created. Some modifications
+        must be made as to have it so downloading this project from git,
+        on any machine, will have a working example.
+    Anthony from the web2py_google_group helped me find the proper way
+        to automate the process of inserting objects into apps through
+        the DAL. ('python web2py.py -S myapp -M -R myscript.py')
+        This command runs 'myscript.py' in an environment populated
+        with the db objects from 'myapp', which is what I was trying to
+        do from outside. (see populate_web_app.py)
+    Web applications all deploy and are properly populated,
+        now must start doing the same for Mac and Linux.
+    First, must auto_update the views to reflect correct image numbers.
+    Views are now auto_updated! Image numbers are displayed correctly.
 
 </story>

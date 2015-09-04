@@ -43,8 +43,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os, shutil
 
-version = '00_01_02'
-
 def check_file_exist(path):
     if os.path.exists(path):
         print path, 'exists!'
@@ -110,4 +108,6 @@ def replace_db_references(version):
         replace_file_contents(path, replacements, lesser_rep)
     return None
 
-replace_db_references(version)
+if __name__ == "__main__":
+    version = '00_01_02'
+    replace_db_references(version)

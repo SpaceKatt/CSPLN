@@ -165,4 +165,5 @@ def in_summary():
     write_meta_data(stuff)
     return None
 
-in_summary()
+if __name__ == "__main__":
+    in_summary()
