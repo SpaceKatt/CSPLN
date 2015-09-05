@@ -1,16 +1,16 @@
 '''
 Description:
-    Move tif files into '..\\images\\raw_tiff', then run this script.
+    Move tif files into '..//images//raw_tiff', then run this script.
 
 Inputs:
-    Tif files in '..\\images\\raw_tiff'
+    Tif files in '..//images//raw_tiff'
 
 Outputs:
-    Will produce folders in '..\\images\\processed_images',
+    Will produce folders in '..//images//processed_images',
         which are labeled with 'M2JT' prefix, and given a unique number.
         Each folder will have both the parent tif and its child png, along
         with a txt file containing both their size and md5.
-    Will produce text files in '..\\data', which are dictionaries.
+    Will produce text files in '..//data', which are dictionaries.
         These should be made coherent by the name of the *.txt file.
         Dictionary format is {md5:file_size}
 
@@ -19,7 +19,7 @@ Currently:
 To Do:
 
 Done:
-    Make text files produced in '..\\data' contain dictionaries, not lists.
+    Make text files produced in '..//data' contain dictionaries, not lists.
         This is important because we can present data as; {md5, size}.
         This change would prevent information loss and allow for better
             search/traceability.
@@ -50,14 +50,14 @@ def check_file_exist(path):
     if os.path.exists(path):
         print path, 'exists!'
     else:
-        sys.exit('File {} doesn\'t exist'.format(path))
+        sys.exit('File {} doesn/'t exist'.format(path))
     return None
 
 def grab_file_paths():
 #    filename_list = []
 #    dir_list = []
     image_path_list = []
-    for root, dirs, files in os.walk("..\\images\\raw_tiff", topdown=False):
+    for root, dirs, files in os.walk("..//images//raw_tiff", topdown=False):
         del dirs
         for name in files:
             image_path_list.append((os.path.join(root, name)))
@@ -67,7 +67,7 @@ def grab_file_paths():
     return image_path_list#, dir_list, filename_list
 
 def grab_out_paths(image_path_list):
-    out_dir = '..\\images\\processed_images\\{pat}'
+    out_dir = '..//images//processed_images//{pat}'
     image_name_form = 'M2JT{}'
     out_paths = []
     file_names = []
@@ -116,17 +116,17 @@ def write_image_meta(im_path, file_name, data):
     with open(meta_file, 'w') as meta_stuff:
 #        keys = data.keys()
 #        for key in keys:
-#        strin = '{} = {}\n'.format(key, data[key])
+#        strin = '{} = {}/n'.format(key, data[key])
         meta_stuff.write(str(data))
     return None
 
 def write_meta_data(data):
     #print data
-    meta_path = '..\\data\\{}.txt'
+    meta_path = '..//data//{}.txt'
     keys = data.keys()
     for key in keys:
         with open(meta_path.format(key), 'w') as meta_file:
-            sizes = str(data[key]) + '\n'
+            sizes = str(data[key]) + '/n'
             meta_file.write(sizes)
     return None
 

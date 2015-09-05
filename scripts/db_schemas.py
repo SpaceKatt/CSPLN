@@ -44,6 +44,6 @@ def insert_db_schema(version, in_path, out_path):
 
 if __name__ == "__main__":
     version = '00_01_02'
-    in_path = '..\\apps\\scaffolding\\common\\schemes.py'
-    out_path = '..\\apps\\scaffolding\\version\\MKE_v'+version+'\\models\\db.py'
+    in_path = '..//apps//scaffolding//common//schemes.py'
+    out_path = '..//apps//scaffolding//version//MKE_v'+version+'//models//db.py'
     insert_db_schema(version, in_path, out_path)

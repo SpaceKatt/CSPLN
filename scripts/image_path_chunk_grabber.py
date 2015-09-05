@@ -38,7 +38,7 @@ import os
 
 def grab_image_paths():
     image_path_list = []
-    for root, dirs, files in os.walk("..\\images\\processed_images", topdown=False):
+    for root, dirs, files in os.walk("..//images//processed_images", topdown=False):
         del dirs
         for name in files:
             if name[-4:] == '.png':
@@ -68,4 +68,4 @@ if __name__ == "__main__":
     images_per_app = 66
     chunks = image_path_chunk_grabber(images_per_app)
     for part in chunks:
-        print part, '\n', chunks[part], '\n'
+        print part, '/n', chunks[part], '/n'

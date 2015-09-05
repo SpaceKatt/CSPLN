@@ -9,7 +9,7 @@ Description:
         which is populated by the db objects of the corresponding web_app.
 
 Inputs:
-    Specific images in '..\\image\\processed_images'
+    Specific images in '..//image//processed_images'
     Specific web_app, and its database: 'image'.
 
 Outputs:
@@ -59,7 +59,7 @@ def check_file_exist(path):
     if os.path.exists(path):
         print path, 'exists!'
     else:
-        sys.exit('File {} doesn\'t exist'.format(path))
+        sys.exit('File {} doesn/'t exist'.format(path))
     return None
 
 def create_dirs(out_path):
@@ -78,12 +78,12 @@ def grab_filename_from_path(in_path):
     return tail or ntpath.basename(head)
 
 def grab_web2py_script_path(which_app, w_os):
-    path_form = '..\\apps\\web_apps\\{os}\\{app}\\web2py\\web2py.py'
+    path_form = '..//apps//web_apps//{os}//{app}//web2py//web2py.py'
     path = path_form.format(os=w_os, app=str(which_app))
     return path
 
 def grab_txt(image_name):
-    image_path_form = '..\\images\\processed_images\\{name}\\{name}.txt'
+    image_path_form = '..//images//processed_images//{name}//{name}.txt'
     with open(image_path_form.format(name=image_name), 'r') as meta_f:
         dic_str = meta_f.read()
         dictionary = eval(dic_str)
@@ -139,13 +139,13 @@ def create_cmds(web2py_script, which_images):
     return int_cmd, upload_cmds, commit_cmd
 
 def create_python_scripts(up_cmds, commit_cmd, which_app):
-    path_form = '.\\populators\{}_populator.py'
+    path_form = './/populators/{}_populator.py'
     path = os.path.abspath(path_form.format(which_app))
     create_dirs(path_form[:-15])
     with open(path, 'w') as python_file:
         for cmd in up_cmds:
-            python_file.write(cmd + '\n')
-        python_file.write('\n' + commit_cmd + '\n')
+            python_file.write(cmd + '/n')
+        python_file.write('/n' + commit_cmd + '/n')
     return path
 
 
@@ -166,9 +166,9 @@ def populate_web_app(which_app, which_images, w_os):
 
 if __name__ == "__main__":
     which_app = 'P6'
-    which_images = ['..\\images\\processed_images\\M2JT0000\\M2JT0000.png',
-                    '..\\images\\processed_images\\M2JT0001\\M2JT0001.png',
-                    '..\\images\\processed_images\\M2JT0002\\M2JT0002.png'
+    which_images = ['..//images//processed_images//M2JT0000//M2JT0000.png',
+                    '..//images//processed_images//M2JT0001//M2JT0001.png',
+                    '..//images//processed_images//M2JT0002//M2JT0002.png'
                     ]
     w_os = 'win'
     populate_web_app(which_app, which_images, w_os)

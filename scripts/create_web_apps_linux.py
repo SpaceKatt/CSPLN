@@ -35,11 +35,11 @@ def check_file_exist(path):
     if os.path.exists(path):
         print path, 'exists!'
     else:
-        sys.exit('File {} doesn\'t exist'.format(path))
+        sys.exit('File {} doesn/'t exist'.format(path))
     return None
 
 def grab_out_paths(num_apps):
-    out_dir = '..\\apps\\web_apps\\linux\\{pat}'
+    out_dir = '..//apps//web_apps//linux//{pat}'
     project_part = 'P{}'
     out_paths = []
     for num in range(1, num_apps + 1):
@@ -48,14 +48,14 @@ def grab_out_paths(num_apps):
     return out_paths
 
 def grab_web2py_frame():
-    webframe = '..\\apps\\scaffolding\\linux\\web2py'
-    webdotpy = '..\\apps\\scaffolding\\common\\web2py.py'
+    webframe = '..//apps//scaffolding//linux//web2py'
+    webdotpy = '..//apps//scaffolding//common//web2py.py'
     check_file_exist(webdotpy)
     check_file_exist(webframe)
     return webframe, webdotpy
 
 def grab_scaffold_app(version):
-    mkever = '..\\apps\\scaffolding\\version\\MKE_v{}'.format(version)
+    mkever = '..//apps//scaffolding//version//MKE_v{}'.format(version)
     check_file_exist(mkever)
     return mkever
 
@@ -72,7 +72,7 @@ def copy_webframez(num_apps):
 
 def modify_out_paths(int_paths):
     mod_out = []
-    addition = 'web2py\\applications'
+    addition = 'web2py//applications'
     for path in int_paths:
         new_path = os.path.join(path, addition)
         mod_out.append(new_path)
@@ -85,7 +85,7 @@ def grab_filename_from_path(in_path):
     return tail or ntpath.basename(head)
 
 #def create_bat(out_path, num):
-#    mkebat = '..\\apps\\scaffolding\\common\\MKE_PT_.bat'
+#    mkebat = '..//apps//scaffolding//common//MKE_PT_.bat'
 #    check_file_exist(mkebat)
 #    shutil.copy(mkebat, out_path)
 #    old_name = os.path.join(out_path, 'MKE_PT_.bat')

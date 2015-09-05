@@ -68,25 +68,25 @@ def create_readme():
     scripts = doc_dic.keys()
     scripts.sort()
     for script in scripts:
-        scopelist.append(script+'\n    ')
-        docstring = doc_dic[script].replace('\n', '\n    ')
-        detaillist.append('\n\n'+script+'\n\n')
+        scopelist.append(script+'/n    ')
+        docstring = doc_dic[script].replace('/n', '/n    ')
+        detaillist.append('/n/n'+script+'/n/n')
         detaillist.append('    '+docstring)
     for item in scopelist:
         scopestuff += item
     for ano_item in detaillist:
         detailstuff += ano_item
-    part_1 = scope.format(scopestuff[:-4]) + '\n'
-    part_2 = details.format(detailstuff) + '\n'
+    part_1 = scope.format(scopestuff[:-4]) + '/n'
+    part_2 = details.format(detailstuff) + '/n'
     readme = part_1 + part_2
     return readme
 
 def write_readme(r_text):
-    with open('.\\README.txt', 'w') as readme:
+    with open('.//README.txt', 'w') as readme:
         readme.write(r_text)
 
 def update_readme():
-    note = '''For higher level to-do-list, see \'.\\story.txt\'.\n\n'''
+    note = '''For higher level to-do-list, see /'.//story.txt/'./n/n'''
     readme_text = create_readme()
     readme_text = note + readme_text
     write_readme(readme_text)

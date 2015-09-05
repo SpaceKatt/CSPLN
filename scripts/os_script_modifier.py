@@ -1,16 +1,9 @@
 '''
 Description:
-    Changes the 'default/index.html' view to reflect the correct
-        image numbers.
 
 Inputs:
-    Dictionary form {P_:[array]}, P_ referring to the specific web_app
-        arrays consisting of image_file_paths.
-    Existing web_apps with views.
 
 Outputs:
-    Changes the 'default/index.html' view to reflect the correct
-        image numbers.
 
 Currently:
 
@@ -35,25 +28,18 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
-
 import os
 
-def gather_info(app_part, first_path):
-    first_num = first_path[-8:-4]
-    while first_num[0] == str(0) and len(first_num) > 1:
-        first_num = first_num[1:]
-    print first_num
-    return app_part, first_num
+def grab_scripts():
+    file_list = os.listdir(os.getcwd())
+    path_list = []
+    for name in file_list:
+        if name[-3:] == '.py':
+            path_list.append(name)
+    return path_list
 
-def grab_view_path(which_app, w_os):
-    app_dir = '..//apps//web_apps//{os}//{app}//web2py//applications'
-    app_dir = app_dir.format(os=w_os, app=which_app)
-    file_loc = 'MKE_Static_Name//views//default//index.html'
-    path = os.path.join(app_dir, file_loc)
-    return path
-
-def define_replacement(first_num):
-    replacements = {' N = 0 ':' N = {} '.format(first_num)}
+def define_replacement():
+    replacements = {'\\':'/'}
     return replacements
 
 def replace_numbers(line, keys, rep_dict):
@@ -74,10 +60,12 @@ def replace_file_contents(path, rep_dic):
             file_again.write(w_line)
     return None
 
-def replace_view(app_part, first_path, w_os):
-    which_app, first_num = gather_info(app_part, first_path)
-    path = grab_view_path(app_part, w_os)
-    rep_dict = define_replacement(first_num)
-    replace_file_contents(path, rep_dict)
-    print path, rep_dict
-    return None
+def main():
+    script_list = grab_scripts()
+    rep_dict = define_replacement()
+    for path in script_list:
+        if path != 'os_script_modifier.py':
+            replace_file_contents(path, rep_dict)
+
+if __name__ == '__main__':
+    main()
