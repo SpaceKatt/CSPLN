@@ -1,14 +1,19 @@
 '''
 Description:
     Updates README.txt file in current directory.
+
 Inputs:
     Functions that share its directory. (discover_functions automatically)
+
 Outputs:
     README.txt file, with Scope&&Details listed.
         Covers functions in current directory.
+
 Currently:
+
 To Do:
     Include story.txt in the README.
+    
 Done:
     Update readme file with current functions&&their docstrings.
 '''

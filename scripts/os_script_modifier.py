@@ -1,9 +1,16 @@
 '''
 Description:
+    Replaces certian parts of python scripts that are suspected to cause
+        problems between different operating systems.
+    Be careful! This script doesn't create an archive, running it
+        without proper care may cause a headache! Use proper string-
+        escape notation.
 
 Inputs:
+    All scripts in this directory (other than self).
 
 Outputs:
+    All scripts, with specific words/phrases replaced.
 
 Currently:
 

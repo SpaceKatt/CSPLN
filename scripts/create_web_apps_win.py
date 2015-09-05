@@ -46,7 +46,7 @@ def check_file_exist(path):
     if os.path.exists(path):
         print path, 'exists!'
     else:
-        sys.exit('File {} doesn\t exist'.format(path))
+        sys.exit('File {} doesn\'t exist'.format(path))
     return None
 
 def grab_out_paths(num_apps):

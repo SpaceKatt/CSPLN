@@ -1,9 +1,18 @@
 '''
 Description:
+    For creating CSPLN webapps for LINUX, from scaffolding.
 
 Inputs:
+    Version number, of MKE_vxx_xx_xx scaffolding file.
+        Where each x corresponds to a current version number.
+        Input as "xx_xx_xx"
+    Number of web applications
 
 Outputs:
+    Web applications, number depends on Input.
+    Puts web2py.py in each web_app (not included in windows version).
+    Puts scaffolding (current app version) into each web2py frame.
+    Renames scaffolding application to 'MKE_Static_Name'.
 
 Currently:
 

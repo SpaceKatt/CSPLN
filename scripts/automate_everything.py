@@ -5,11 +5,14 @@ Description:
 Inputs:
     All the scripts!
     Version number of current scaffolding_app
+    Images in '../images/raw_tiff'
+    OS Versions of web2py framework in '../scaffolidng'
 
 Outputs:
     All the things!
     All populated web_apps.
-    The final project output.
+    The final project output, for Linux, Mac, and Windows.
+    Updates README
 
 Currently:
 

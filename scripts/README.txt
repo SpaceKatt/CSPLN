@@ -25,11 +25,14 @@ automate_everything.py
     Inputs:
         All the scripts!
         Version number of current scaffolding_app
+        Images in '../images/raw_tiff'
+        OS Versions of web2py framework in '../scaffolidng'
     
     Outputs:
         All the things!
         All populated web_apps.
-        The final project output.
+        The final project output, for Linux, Mac, and Windows.
+        Updates README
     
     Currently:
     
@@ -41,10 +44,19 @@ automate_everything.py
 create_web_apps_linux.py
 
     Description:
+        For creating CSPLN webapps for LINUX, from scaffolding.
     
     Inputs:
+        Version number, of MKE_vxx_xx_xx scaffolding file.
+            Where each x corresponds to a current version number.
+            Input as "xx_xx_xx"
+        Number of web applications
     
     Outputs:
+        Web applications, number depends on Input.
+        Puts web2py.py in each web_app (not included in windows version).
+        Puts scaffolding (current app version) into each web2py frame.
+        Renames scaffolding application to 'MKE_Static_Name'.
     
     Currently:
     
@@ -55,10 +67,19 @@ create_web_apps_linux.py
 create_web_apps_mac.py
 
     Description:
+        For creating CSPLN webapps for MACINTOSH, from scaffolding.
     
     Inputs:
+        Version number, of MKE_vxx_xx_xx scaffolding file.
+            Where each x corresponds to a current version number.
+            Input as "xx_xx_xx"
+        Number of web applications
     
     Outputs:
+        Web applications, number depends on Input.
+        Puts web2py.py in each web_app (not included in windows version).
+        Puts scaffolding (current app version) into each web2py frame.
+        Renames scaffolding application to 'MKE_Static_Name'.
     
     Currently:
     
@@ -134,10 +155,17 @@ image_path_chunk_grabber.py
 os_script_modifier.py
 
     Description:
+        Replaces certian parts of python scripts that are suspected to cause
+            problems between different operating systems.
+        Be careful! This script doesn't create an archive, running it
+            without proper care may cause a headache! Use proper string-
+            escape notation.
     
     Inputs:
+        All scripts in this directory (other than self).
     
     Outputs:
+        All scripts, with specific words/phrases replaced.
     
     Currently:
     
@@ -264,14 +292,19 @@ update_readme.py
 
     Description:
         Updates README.txt file in current directory.
+    
     Inputs:
         Functions that share its directory. (discover_functions automatically)
+    
     Outputs:
         README.txt file, with Scope&&Details listed.
             Covers functions in current directory.
+    
     Currently:
+    
     To Do:
         Include story.txt in the README.
+        
     Done:
         Update readme file with current functions&&their docstrings.
 

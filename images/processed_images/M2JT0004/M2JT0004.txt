@@ -1,1 +1,1 @@
-{'name': 'M2JT0004', 'file': '..\\images\\processed_images\\M2JT0004\\M2JT0004', 'md5': '896ec4135e43ecac06e423715798df1e', 'tif_parent_md5': '6f8b35bc114f563124eb2d657e7efda0', 'size_tiff_parent': 269166, 'size': 169691}
+{'name': 'M2JT0004', 'file': '../images/processed_images/M2JT0004\\M2JT0004', 'md5': '896ec4135e43ecac06e423715798df1e', 'tif_parent_md5': '6f8b35bc114f563124eb2d657e7efda0', 'size_tiff_parent': 269166, 'size': 169691}

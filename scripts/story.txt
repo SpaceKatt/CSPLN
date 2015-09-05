@@ -1,12 +1,10 @@
 <todolist>
 
 Current project status:
-    Running! (confirmed for windows only)
+    Running! (confirmed for Windows&&Linux)
     Licensed
 
 Current activity:
-    Put smaller density *.tif files as examples on github,
-        will make app easier to download and demonstrate.
 
 To-Do:
     Readme, include 'story.txt' file.
@@ -59,6 +57,8 @@ Done:
         up into. Memos in '..\\data' should be handy for this.
     Web_apps must properly display image number,
         index.html in the 'views\\default' directory should be looked at.
+    Put smaller density *.tif files as examples on github,
+        will make app easier to download and demonstrate.
 
 Keep doing (for consistency):
     Have scaffolding version be a function input, this will make for
@@ -104,5 +104,16 @@ Keep doing (for consistency):
         now must start doing the same for Mac and Linux.
     First, must auto_update the views to reflect correct image numbers.
     Views are now auto_updated! Image numbers are displayed correctly.
+
+5/Sept/2015:
+    Linux version now running, waiting for Joe to confirm Mac version.
+    Ready for new application versions, with updated content.
+    Could combine all parts as a distributed cluster,
+        though I'm not 100% on exactly how I would do it =p
+    Had some trouble with string replacement,
+        had to go through code and manually fix some replacements
+        that I did automatically with incorrect string-escape notation.
+    Learned to always test before you commit, it's too easy to get carried
+        away with enthusiasm.
 
 </story>
