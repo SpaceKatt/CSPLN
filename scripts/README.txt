@@ -1,13 +1,13 @@
-For higher level to-do-list, see '.\story.txt'.
+For higher level to-do-list, see './story.txt'.
 
 Scope:
-
     automate_everything.py
     create_web_apps_linux.py
     create_web_apps_mac.py
     create_web_apps_win.py
     db_schemas.py
     image_path_chunk_grabber.py
+    os_script_modifier.py
     populate_web_app.py
     process_images.py
     replace_db_references.py
@@ -131,19 +131,33 @@ image_path_chunk_grabber.py
     
     Done:
 
+os_script_modifier.py
+
+    Description:
+    
+    Inputs:
+    
+    Outputs:
+    
+    Currently:
+    
+    To Do:
+    
+    Done:
+
 populate_web_app.py
 
     Description:
         Populates single web_app with images,
-            use interactive python environment w/web2py.
+            use interactive python environment w\web2py.
         Will be used by another module 'x', module 'x' will decide
             how_many_apps to create and how_many_images_per_app, which will
             determine how 'x' calls populate_web_app.
-        Saves generated cmds to './populators', which are run in an environment
+        Saves generated cmds to '.\populators', which are run in an environment
             which is populated by the db objects of the corresponding web_app.
     
     Inputs:
-        Specific images in '..\image\processed_images'
+        Specific images in '../image/processed_images'
         Specific web_app, and its database: 'image'.
     
     Outputs:
@@ -171,17 +185,17 @@ populate_web_app.py
 process_images.py
 
     Description:
-        Move tif files into '..\images\raw_tiff', then run this script.
+        Move tif files into '../images/raw_tiff', then run this script.
     
     Inputs:
-        Tif files in '..\images\raw_tiff'
+        Tif files in '../images/raw_tiff'
     
     Outputs:
-        Will produce folders in '..\images\processed_images',
+        Will produce folders in '../images/processed_images',
             which are labeled with 'M2JT' prefix, and given a unique number.
             Each folder will have both the parent tif and its child png, along
             with a txt file containing both their size and md5.
-        Will produce text files in '..\data', which are dictionaries.
+        Will produce text files in '../data', which are dictionaries.
             These should be made coherent by the name of the *.txt file.
             Dictionary format is {md5:file_size}
     
@@ -190,7 +204,7 @@ process_images.py
     To Do:
     
     Done:
-        Make text files produced in '..\data' contain dictionaries, not lists.
+        Make text files produced in '../data' contain dictionaries, not lists.
             This is important because we can present data as; {md5, size}.
             This change would prevent information loss and allow for better
                 search/traceability.
@@ -250,19 +264,14 @@ update_readme.py
 
     Description:
         Updates README.txt file in current directory.
-    
     Inputs:
         Functions that share its directory. (discover_functions automatically)
-    
     Outputs:
         README.txt file, with Scope&&Details listed.
             Covers functions in current directory.
-    
     Currently:
-    
     To Do:
         Include story.txt in the README.
-    
     Done:
         Update readme file with current functions&&their docstrings.
 

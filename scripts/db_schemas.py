@@ -22,7 +22,7 @@ Done:
 CSPLN_MaryKeelerEdition; Manages images to which notes can be added.
 Copyright (C) 2015, Thomas Kercheval
 
-This program is free software: you can redistribute it and/or modify
+This program is free software: you can redistribute it and\or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
@@ -44,6 +44,6 @@ def insert_db_schema(version, in_path, out_path):
 
 if __name__ == "__main__":
     version = '00_01_02'
-    in_path = '..//apps//scaffolding//common//schemes.py'
-    out_path = '..//apps//scaffolding//version//MKE_v'+version+'//models//db.py'
+    in_path = '../apps/scaffolding/common/schemes.py'
+    out_path = '../apps/scaffolding/version/MKE_v'+version+'/models/db.py'
     insert_db_schema(version, in_path, out_path)

@@ -47,7 +47,7 @@ def check_file_exist(path):
     if os.path.exists(path):
         print path, 'exists!'
     else:
-        sys.exit('File {} doesn/'t exist'.format(path))
+        sys.exit('File {} doesn\'t exist'.format(path))
     return None
 
 def grab_replacement_dictionaries():
@@ -62,9 +62,9 @@ def grab_replacement_dictionaries():
 
 def grab_files_tobe_replaced(version):
     paths = []
-    controllers = '..//apps//scaffolding//version//MKE_v{}//controllers//default.py'
-    views_dir = '..//apps//scaffolding//version//MKE_v{ver}//views//{vfile}'
-    views = ['default//show.html', 'default//index.html', ]
+    controllers = '../apps/scaffolding/version/MKE_v{}/controllers/default.py'
+    views_dir = '../apps/scaffolding/version/MKE_v{ver}/views/{vfile}'
+    views = ['default/show.html', 'default/index.html', ]
     paths.append(controllers.format(version))
     for path in views:
         paths.append(views_dir.format(ver=version, vfile=path))
@@ -103,7 +103,7 @@ def replace_db_references(version):
     replacements, lesser_rep = grab_replacement_dictionaries()
     paths = grab_files_tobe_replaced(version)
     for path in paths:
-        print '/n/n/n', path, '/n/n/n'
+        print '\n\n\n', path, '\n\n\n'
         check_file_exist(path)
         replace_file_contents(path, replacements, lesser_rep)
     return None

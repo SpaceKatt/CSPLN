@@ -39,7 +39,7 @@ def grab_scripts():
     return path_list
 
 def define_replacement():
-    replacements = {'\\':'/'}
+    replacements = {'\\\\':'/', "doesn/'t":"doesn\\'t", '/n': '\\n'}
     return replacements
 
 def replace_numbers(line, keys, rep_dict):
@@ -63,6 +63,7 @@ def replace_file_contents(path, rep_dic):
 def main():
     script_list = grab_scripts()
     rep_dict = define_replacement()
+    print rep_dict
     for path in script_list:
         if path != 'os_script_modifier.py':
             replace_file_contents(path, rep_dict)
