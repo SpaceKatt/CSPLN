@@ -50,7 +50,7 @@ def check_file_exist(path):
     return None
 
 def grab_out_paths(num_apps):
-    out_dir = '..\\apps\\web_apps\\{pat}'
+    out_dir = '..\\apps\\web_apps\\win\\{pat}'
     project_part = 'P{}'
     out_paths = []
     for num in range(1, num_apps + 1):
@@ -59,14 +59,14 @@ def grab_out_paths(num_apps):
     return out_paths
 
 def grab_web2py_frame():
-    webframe = '..\\apps\\scaffolding\\windows\\web2py'
+    webframe = '..\\apps\\scaffolding\\win\\web2py'
     webdotpy = '..\\apps\\scaffolding\\common\\web2py.py'
     check_file_exist(webdotpy)
     check_file_exist(webframe)
     return webframe, webdotpy
 
 def grab_scaffold_app(version):
-    mkever = '..\\apps\\scaffolding\\MKE_v{}'.format(version)
+    mkever = '..\\apps\\scaffolding\\version\\MKE_v{}'.format(version)
     check_file_exist(mkever)
     return mkever
 

@@ -62,8 +62,8 @@ def grab_replacement_dictionaries():
 
 def grab_files_tobe_replaced(version):
     paths = []
-    controllers = '..\\apps\\scaffolding\\MKE_v{}\\controllers\\default.py'
-    views_dir = '..\\apps\\scaffolding\\MKE_v{ver}\\views\\{vfile}'
+    controllers = '..\\apps\\scaffolding\\version\\MKE_v{}\\controllers\\default.py'
+    views_dir = '..\\apps\\scaffolding\\version\\MKE_v{ver}\\views\\{vfile}'
     views = ['default\\show.html', 'default\\index.html', ]
     paths.append(controllers.format(version))
     for path in views:

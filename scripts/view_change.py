@@ -45,8 +45,9 @@ def gather_info(app_part, first_path):
     print first_num
     return app_part, first_num
 
-def grab_view_path(which_app):
-    app_dir = '..\\apps\\web_apps\\{}\\web2py\\applications'.format(which_app)
+def grab_view_path(which_app, w_os):
+    app_dir = '..\\apps\\web_apps\\{os}\\{app}\\web2py\\applications'
+    app_dir = app_dir.format(os=w_os, app=which_app)
     file_loc = 'MKE_Static_Name\\views\\default\\index.html'
     path = os.path.join(app_dir, file_loc)
     return path
@@ -73,9 +74,9 @@ def replace_file_contents(path, rep_dic):
             file_again.write(w_line)
     return None
 
-def replace_view(app_part, first_path):
+def replace_view(app_part, first_path, w_os):
     which_app, first_num = gather_info(app_part, first_path)
-    path = grab_view_path(app_part)
+    path = grab_view_path(app_part, w_os)
     rep_dict = define_replacement(first_num)
     replace_file_contents(path, rep_dict)
     print path, rep_dict

@@ -3,6 +3,8 @@ For higher level to-do-list, see '.\story.txt'.
 Scope:
 
     automate_everything.py
+    create_web_apps_linux.py
+    create_web_apps_mac.py
     create_web_apps_win.py
     db_schemas.py
     image_path_chunk_grabber.py
@@ -33,6 +35,34 @@ automate_everything.py
     
     To Do:
         Rewrite Description, Inputs, and Outputs
+    
+    Done:
+
+create_web_apps_linux.py
+
+    Description:
+    
+    Inputs:
+    
+    Outputs:
+    
+    Currently:
+    
+    To Do:
+    
+    Done:
+
+create_web_apps_mac.py
+
+    Description:
+    
+    Inputs:
+    
+    Outputs:
+    
+    Currently:
+    
+    To Do:
     
     Done:
 

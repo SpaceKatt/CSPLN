@@ -36,11 +36,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 import create_web_apps_win
+import create_web_apps_mac
+import create_web_apps_linux
 import image_path_chunk_grabber as impcg
 import populate_web_app as popu
 import process_images
 import the_decider as t_d
-import view_change
+import view_change as v_c
 import update_readme
 
 import os
@@ -52,20 +54,25 @@ def discover_how_many_tifs():
 
 def prepare_png_images():
     total_image_num = discover_how_many_tifs()
-    #process_images.in_summary()
+    process_images.in_summary()
     how_many_apps, images_per_app = t_d.the_decider(total_image_num)
     return how_many_apps, images_per_app
 
 def create_web_app_population(version, how_many_apps, images_per_app):
+    os = ['win', 'mac', 'linux']
     create_web_apps_win.deploy_scaffolding(version, how_many_apps)
+    create_web_apps_mac.deploy_scaffolding(version, how_many_apps)
+    create_web_apps_linux.deploy_scaffolding(version, how_many_apps)
     dict_image_p = impcg.image_path_chunk_grabber(images_per_app)
-    for key_part in dict_image_p:
-        popu.populate_web_app(str(key_part), dict_image_p[key_part])
-        view_change.replace_view(str(key_part), dict_image_p[key_part][0])
+    for w_os in os:
+        for key_part in dict_image_p:
+            popu.populate_web_app(key_part, dict_image_p[key_part], w_os)
+            v_c.replace_view(key_part, dict_image_p[key_part][0], w_os)
     return None
 
 def final(version):
     how_many_apps, images_per_app = prepare_png_images()
+    print how_many_apps, images_per_app
     create_web_app_population(version, how_many_apps, images_per_app)
     update_readme.update_readme()
     return None

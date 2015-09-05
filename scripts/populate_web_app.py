@@ -77,9 +77,9 @@ def grab_filename_from_path(in_path):
     head, tail = ntpath.split(in_path)
     return tail or ntpath.basename(head)
 
-def grab_web2py_script_path(which_app):
-    path_form = '..\\apps\\web_apps\\{}\\web2py\\web2py.py'
-    path = path_form.format(str(which_app))
+def grab_web2py_script_path(which_app, w_os):
+    path_form = '..\\apps\\web_apps\\{os}\\{app}\\web2py\\web2py.py'
+    path = path_form.format(os=w_os, app=str(which_app))
     return path
 
 def grab_txt(image_name):
@@ -156,9 +156,9 @@ def pass_cmds(int_cmd, py_pop):
     first.communicate()
     return None
 
-def populate_web_app(which_app, which_images):
+def populate_web_app(which_app, which_images, w_os):
     check_images_exist(which_images)
-    web2py = grab_web2py_script_path(which_app)
+    web2py = grab_web2py_script_path(which_app, w_os)
     int_cmd, up_cmds, commit_cmd = create_cmds(web2py, which_images)
     py_pop = create_python_scripts(up_cmds, commit_cmd, which_app)
     pass_cmds(int_cmd, py_pop)
@@ -170,4 +170,5 @@ if __name__ == "__main__":
                     '..\\images\\processed_images\\M2JT0001\\M2JT0001.png',
                     '..\\images\\processed_images\\M2JT0002\\M2JT0002.png'
                     ]
-    populate_web_app(which_app, which_images)
+    w_os = 'win'
+    populate_web_app(which_app, which_images, w_os)
