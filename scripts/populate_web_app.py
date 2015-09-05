@@ -151,14 +151,14 @@ def create_python_scripts(up_cmds, commit_cmd, which_app):
 
 def pass_cmds(int_cmd, py_pop):
     import subprocess
-    master_cmd = int_cmd + py_pop
+    master_cmd = (int_cmd + py_pop).split(' ')
     first = subprocess.Popen(master_cmd)
     first.communicate()
     return None
 
 def populate_web_app(which_app, which_images, w_os):
     check_images_exist(which_images)
-    web2py = grab_web2py_script_path(which_app, w_os)
+    web2py = os.path.abspath(grab_web2py_script_path(which_app, w_os))
     int_cmd, up_cmds, commit_cmd = create_cmds(web2py, which_images)
     py_pop = create_python_scripts(up_cmds, commit_cmd, which_app)
     pass_cmds(int_cmd, py_pop)

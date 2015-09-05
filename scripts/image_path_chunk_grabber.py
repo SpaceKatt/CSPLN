@@ -51,6 +51,7 @@ def chunk_it_out(image_path_list, images_per_app):
         array = []
         for it in range(images_per_app):
             array.append(image_path_list.pop(0))
+        array.sort()
         array_list.append(array)
     return array_list
 
