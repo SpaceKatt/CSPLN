@@ -46,10 +46,17 @@ def gather_info(app_part, first_path):
     return app_part, first_num
 
 def grab_view_path(which_app, w_os):
-    app_dir = '../apps/web_apps/{os}/{app}/web2py/applications'
-    app_dir = app_dir.format(os=w_os, app=which_app)
-    file_loc = 'MKE_Static_Name/views/default/index.html'
-    path = os.path.join(app_dir, file_loc)
+    if w_os == 'mac':
+        app_dir = '../apps/web_apps/{os}/{app}/web2py/{ext}/applications'
+        extra = 'web2py.app/Contents/Resources'
+        app_dir = app_dir.format(os=w_os, app=which_app, ext=extra)
+        file_loc = 'MKE_Static_Name/views/default/index.html'
+        path = os.path.join(app_dir, file_loc)
+    else:
+        app_dir = '../apps/web_apps/{os}/{app}/web2py/applications'
+        app_dir = app_dir.format(os=w_os, app=which_app)
+        file_loc = 'MKE_Static_Name/views/default/index.html'
+        path = os.path.join(app_dir, file_loc)
     return path
 
 def define_replacement(first_num):

@@ -86,7 +86,7 @@ def md5check_grab(file_path):
     #print file_path
     check_file_exist(file_path)
     md5sum = hashlib.md5(open(file_path, 'rb').read()).hexdigest()
-    print md5sum
+    print '   md5: ', md5sum
     return md5sum
 
 def transform_tiff_to_png(tiff_path, out_path, file_name):

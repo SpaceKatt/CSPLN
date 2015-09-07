@@ -71,20 +71,24 @@ def grab_scaffold_app(version):
 def copy_webframez(num_apps):
     webframe, webdotpy = grab_web2py_frame()
     out_paths = grab_out_paths(num_apps)
+    mac_path = 'web2py'
+    mac_ext_path = 'web2py/web2py.app/Contents/Resources'
     for path in out_paths:
-        shutil.copytree(webframe, os.path.join(path, 'web2py'))
-        next_path = os.path.join(path, 'web2py')
+        shutil.copytree(webframe, os.path.join(path, mac_path))
+        next_path = os.path.join(path, mac_ext_path)
         shutil.copy(webdotpy, next_path)
         print 'web2py frame copied to: {}'.format(path)
         print 'web2py.py copied to: {}'.format(next_path)
+    print out_paths
     return out_paths
 
 def modify_out_paths(int_paths):
     mod_out = []
-    addition = 'web2py/applications'
+    addition = 'web2py/web2py.app/Contents/Resources/applications'
     for path in int_paths:
         new_path = os.path.join(path, addition)
         mod_out.append(new_path)
+    print mod_out
     return mod_out
 
 def grab_filename_from_path(in_path):
@@ -139,6 +143,6 @@ def deploy_scaffolding(version, num_apps):
     return None
 
 if __name__ == "__main__":
-    num_apps = 10
+    num_apps = 2
     version = '00_01_02'
     deploy_scaffolding(version, num_apps)

@@ -75,7 +75,8 @@ def create_web_app_population(version, how_many_apps, images_per_app):
 
 def final(version):
     how_many_apps, images_per_app = prepare_png_images()
-    print how_many_apps, images_per_app
+    print '\nApps nessecary: ', how_many_apps
+    print '\nImages per app: ', images_per_app, '\n'
     create_web_app_population(version, how_many_apps, images_per_app)
     update_readme.update_readme()
     return None

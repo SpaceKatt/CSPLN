@@ -78,8 +78,14 @@ def grab_filename_from_path(in_path):
     return tail or ntpath.basename(head)
 
 def grab_web2py_script_path(which_app, w_os):
-    path_form = '../apps/web_apps/{os}/{app}/web2py/web2py.py'
-    path = path_form.format(os=w_os, app=str(which_app))
+    if w_os == 'mac':
+        path_form = '../apps/web_apps/{os}/{app}/web2py/{maaa}/web2py.py'
+        extra = 'web2py.app/Contents/Resources'
+        path = path_form.format(os=w_os, app=str(which_app), maaa=extra)
+    else:
+        path_form = '../apps/web_apps/{os}/{app}/web2py/web2py.py'
+        path = path_form.format(os=w_os, app=str(which_app))
+    print path
     return path
 
 def grab_txt(image_name):
@@ -165,10 +171,10 @@ def populate_web_app(which_app, which_images, w_os):
     return None
 
 if __name__ == "__main__":
-    which_app = 'P6'
+    which_app = 'P1'
     which_images = ['../images/processed_images/M2JT0000/M2JT0000.png',
                     '../images/processed_images/M2JT0001/M2JT0001.png',
                     '../images/processed_images/M2JT0002/M2JT0002.png'
                     ]
-    w_os = 'win'
+    w_os = 'mac'
     populate_web_app(which_app, which_images, w_os)
