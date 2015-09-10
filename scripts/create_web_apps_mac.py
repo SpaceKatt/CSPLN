@@ -75,10 +75,7 @@ def copy_webframez(num_apps):
     mac_ext_path = 'web2py/web2py.app/Contents/Resources'
     for path in out_paths:
         shutil.copytree(webframe, os.path.join(path, mac_path))
-        next_path = os.path.join(path, mac_ext_path)
-        shutil.copy(webdotpy, next_path)
         print 'web2py frame copied to: {}'.format(path)
-        print 'web2py.py copied to: {}'.format(next_path)
     print out_paths
     return out_paths
 
