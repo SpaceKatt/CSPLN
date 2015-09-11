@@ -1,0 +1,8 @@
+127.0.0.1, 2015-09-10 20:05:55, GET, /MKE_Static_Name/default/index, HTTP/1.1, 404, 0.001386
+127.0.0.1, 2015-09-10 20:05:55, GET, /favicon.ico, HTTP/1.1, 400, 0.000280
+127.0.0.1, 2015-09-10 20:10:24, GET, /MKE_Static_Name/default/index, HTTP/1.1, 404, 0.001528
+127.0.0.1, 2015-09-10 20:10:24, GET, /favicon.ico, HTTP/1.1, 400, 0.000202
+127.0.0.1, 2015-09-11 10:10:59, GET, /MKE_Static_Name/default/index, HTTP/1.1, 404, 0.002204
+127.0.0.1, 2015-09-11 10:10:59, GET, /favicon.ico, HTTP/1.1, 400, 0.000192
+127.0.0.1, 2015-09-11 10:12:53, GET, /MKE_Static_Name/default/index, HTTP/1.1, 404, 0.002382
+127.0.0.1, 2015-09-11 10:12:53, GET, /favicon.ico, HTTP/1.1, 400, 0.000197
