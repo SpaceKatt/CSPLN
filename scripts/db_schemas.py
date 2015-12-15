@@ -21,7 +21,6 @@ Description:
     This script simply copies the db schema into the scaffolding.
 
 Inputs:
-    Version of scaffolding, 'xx_xx_xx'.
     Path of database schema.
     Path of db.py in scaffolding, 'MKE_vxx_xx_xx'
 
@@ -37,14 +36,15 @@ To Do:
 Done:
 '''
 
-import os, shutil
+import shutil
 
-def insert_db_schema(version, in_path, out_path):
+def insert_db_schema(in_path, out_path):
+    """Replaces db schema. Doesn't need to run everytime."""
     shutil.copy(in_path, out_path)
     return None
 
 if __name__ == "__main__":
-    version = '00_01_02'
-    in_path = '../apps/scaffolding/common/schemes.py'
-    out_path = '../apps/scaffolding/version/MKE_v'+version+'/models/db.py'
-    insert_db_schema(version, in_path, out_path)
+    VERSION = '00_01_02'
+    IN_PATH = '../apps/scaffolding/common/schemes.py'
+    OUT_PATH = '../apps/scaffolding/version/MKE_v'+VERSION+'/models/db.py'
+    insert_db_schema(IN_PATH, OUT_PATH)

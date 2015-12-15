@@ -44,6 +44,7 @@ Done:
 import os, sys, shutil
 
 def check_file_exist(path):
+    """Check if the file at the given path exists."""
     if os.path.exists(path):
         print path, 'exists!'
     else:
@@ -51,6 +52,10 @@ def check_file_exist(path):
     return None
 
 def grab_out_paths(num_apps):
+    """
+    From the number of applications necessary,  create a list
+        of pathnames where we will create windows applications.
+    """
     out_dir = '../apps/web_apps/win/{pat}'
     project_part = 'P{}'
     out_paths = []
@@ -60,6 +65,7 @@ def grab_out_paths(num_apps):
     return out_paths
 
 def grab_web2py_frame():
+    """Grab the path of the web2py framework and check its existence."""
     webframe = '../apps/scaffolding/win/web2py'
     webdotpy = '../apps/scaffolding/common/web2py.py'
     check_file_exist(webdotpy)
@@ -67,11 +73,17 @@ def grab_web2py_frame():
     return webframe, webdotpy
 
 def grab_scaffold_app(version):
+    """Grab the path of our scaffolding and check its existence."""
     mkever = '../apps/scaffolding/version/MKE_v{}'.format(version)
     check_file_exist(mkever)
     return mkever
 
 def copy_webframez(num_apps):
+    """
+    For each path where we intend to create a linux application,
+        create a copy of the web2py framework and a modified copy
+        of web2py.py.
+    """
     webframe, webdotpy = grab_web2py_frame()
     out_paths = grab_out_paths(num_apps)
     for path in out_paths:
@@ -83,6 +95,10 @@ def copy_webframez(num_apps):
     return out_paths
 
 def modify_out_paths(int_paths):
+    """
+    Modifies the out_paths from the locations of the web2py framework
+        to where our applications will be generated.
+    """
     mod_out = []
     addition = 'web2py/applications'
     for path in int_paths:
@@ -91,12 +107,13 @@ def modify_out_paths(int_paths):
     return mod_out
 
 def grab_filename_from_path(in_path):
-    '''Input a path, return last chunck'''
+    """Input a path, return last chunck."""
     import ntpath
     head, tail = ntpath.split(in_path)
     return tail or ntpath.basename(head)
 
 def create_bat(out_path, num):
+    """Creates a bat file to start the web2py server."""
     mkebat = '../apps/scaffolding/common/MKE_PT_.bat'
     check_file_exist(mkebat)
     shutil.copy(mkebat, out_path)
@@ -108,6 +125,7 @@ def create_bat(out_path, num):
     return None
 
 def rename_exe(path, num):
+    """Renames exe files."""
     old_name = os.path.join(path, 'web2py.exe')
     exe_name = 'MKE_PT_{}.exe'.format(num)
     new_name = os.path.join(path, exe_name)
@@ -116,6 +134,7 @@ def rename_exe(path, num):
     return None
 
 def modify_webframez(out_paths, num_apps):
+    """For every webframe, create a bat file."""
     assert len(out_paths) == int(num_apps)
     num = 1
     for path in out_paths:
@@ -125,6 +144,10 @@ def modify_webframez(out_paths, num_apps):
     return None
 
 def copy_app(version, out_paths):
+    """
+    Creates an application for every copy of the web2py framework,
+        from scaffolding application.
+    """
     scaff_app = grab_scaffold_app(version)
     filename = grab_filename_from_path(scaff_app)
     for path in out_paths:
@@ -135,6 +158,10 @@ def copy_app(version, out_paths):
     return None
 
 def deploy_scaffolding(version, num_apps):
+    """
+    Deploys the web2py framework and the current version of our
+        scaffolding, as many times as is necessary.
+    """
     out_paths = copy_webframez(num_apps)
     modify_webframez(out_paths, num_apps)
     new_paths = modify_out_paths(out_paths)
@@ -142,6 +169,6 @@ def deploy_scaffolding(version, num_apps):
     return None
 
 if __name__ == "__main__":
-    num_apps = 10
-    version = '00_01_02'
-    deploy_scaffolding(version, num_apps)
+    NUM_APPS = 10
+    VERSION = '00_01_02'
+    deploy_scaffolding(VERSION, NUM_APPS)

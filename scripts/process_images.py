@@ -48,6 +48,7 @@ from PIL import Image
 import hashlib
 
 def check_file_exist(path):
+    """Check if the file at the given path exists."""
     if os.path.exists(path):
         print path, 'exists!'
     else:
@@ -101,7 +102,7 @@ def copy_tiff_to_final_loc(tiff_path, out_path, file_name):
 def create_dirs(out_paths):
     for path in out_paths:
         if not os.path.exists(path):
-	        os.makedirs(path)
+            os.makedirs(path)
     return None
 
 def write_image_meta(im_path, file_name, data):
@@ -119,17 +120,17 @@ def write_meta_data(data):
             meta_file.write(sizes)
     return None
 
-def process_image(im, out, fi):
+def process_image(image, out, fil):
     image_meta = {}
-    md5png, png_sizei = transform_tiff_to_png(im, out, fi)
-    md5tif, tif_sizei = copy_tiff_to_final_loc(im, out, fi)
+    md5png, png_sizei = transform_tiff_to_png(image, out, fil)
+    md5tif, tif_sizei = copy_tiff_to_final_loc(image, out, fil)
     image_meta['md5'] = str(md5png)
     image_meta['size'] = int(png_sizei)
     image_meta['tif_parent_md5'] = str(md5tif)
     image_meta['size_tiff_parent'] = int(tif_sizei)
-    image_meta['name'] = fi
-    image_meta['file'] = os.path.join(out, fi)
-    write_image_meta(out, fi, image_meta)
+    image_meta['name'] = fil
+    image_meta['file'] = os.path.join(out, fil)
+    write_image_meta(out, fil, image_meta)
     return image_meta
 
 def auto_rawr():

@@ -51,7 +51,7 @@ def check_file_exist(path):
 
 def grab_out_paths(number_apps):
     """
-    From the number of applications nessecary,  create a list
+    From the number of applications necessary,  create a list
         of pathnames where we will create linux applications.
     """
     out_dir = '../apps/web_apps/linux/{pat}'
@@ -63,7 +63,7 @@ def grab_out_paths(number_apps):
     return out_paths
 
 def grab_web2py_frame():
-    """Grab the path of the web2py framework and check its existance."""
+    """Grab the path of the web2py framework and check its existence."""
     webframe = '../apps/scaffolding/linux/web2py'
     webdotpy = '../apps/scaffolding/common/web2py.py'
     check_file_exist(webdotpy)
@@ -71,7 +71,7 @@ def grab_web2py_frame():
     return webframe, webdotpy
 
 def grab_scaffold_app(current_version):
-    """Grab the path of our scaffolding and check its existance."""
+    """Grab the path of our scaffolding and check its existence."""
     mkever = '../apps/scaffolding/version/MKE_v{}'.format(current_version)
     check_file_exist(mkever)
     return mkever

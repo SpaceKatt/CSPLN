@@ -1,4 +1,4 @@
-'''
+r"""
 <license>
 CSPLN_MaryKeelerEdition; Manages images to which notes can be added.
 Copyright (C) 2015, Thomas Kercheval
@@ -52,11 +52,12 @@ Done:
         running web2py.py scripts to interact with web_app.
             Asked question on stackoverflow. (answered by Anthony)
 
-'''
+"""
 
-import os
+import os, sys
 
 def check_file_exist(path):
+    """Check if the file at the given path exists."""
     if os.path.exists(path):
         print path, 'exists!'
     else:
@@ -64,21 +65,27 @@ def check_file_exist(path):
     return None
 
 def create_dirs(out_path):
+    """If a directory doesn't exist at the specified path, create one."""
     if not os.path.exists(out_path):
-	    os.makedirs(out_path)
+        os.makedirs(out_path)
 
 def check_images_exist(which_images):
+    """For every specified file, check its existence."""
     for path in which_images:
         check_file_exist(path)
     return None
 
 def grab_filename_from_path(in_path):
-    '''Input a path, return last chunck'''
+    """Input a path, return last chunck"""
     import ntpath
     head, tail = ntpath.split(in_path)
     return tail or ntpath.basename(head)
 
 def grab_web2py_script_path(which_app, w_os):
+    """
+    For a list of operating systems, get the path of the web2py.py
+        script for a specified application.
+    """
     if w_os == 'mac':
         path_form = '../apps/web_apps/{os}/{app}/web2py/{maaa}/web2py.py'
         extra = 'web2py.app/Contents/Resources'
@@ -90,18 +97,22 @@ def grab_web2py_script_path(which_app, w_os):
     return path
 
 def grab_txt(image_name):
+    """Grabs metadata for a specified image and stores it as a dictionary."""
+    import ast
     image_path_form = '../images/processed_images/{name}/{name}.txt'
     with open(image_path_form.format(name=image_name), 'r') as meta_f:
         dic_str = meta_f.read()
-        dictionary = eval(dic_str)
+        dictionary = ast.literal_eval(dic_str)
     return dictionary
 
 def resolve_file_path(relative_path, ext):
+    """From a relative_path and file extention, creates an absolute path."""
     path_interim = relative_path + ext
     abs_path = os.path.abspath(path_interim)
     return abs_path
 
 def gather_png_info(image_path):
+    """Retrieves and modifies png metadata, for further processing."""
     image_name_ext = grab_filename_from_path(image_path)
     image_name = image_name_ext[:-4]
     meta_dict = grab_txt(image_name)
@@ -109,33 +120,45 @@ def gather_png_info(image_path):
     return meta_dict
 
 def create_single_cmd(image_path):
+    """
+    Creates a single command, which is used to put a single entry
+        into a single database, for a specific application.
+    """
     png_info = gather_png_info(image_path)
     keys = png_info.keys()
     insert_form = '{field}={value}'
     insert_cmd = 'db.image.insert({stuff})'
     insert_list = []
+
     for key in keys:
         if key == 'file':
             object_file = "open('{}', 'rb')".format(png_info[key])
             single_cmd = insert_form.format(field=key, value=object_file)
             insert_list.append(single_cmd)
-        elif type(png_info[key]) == str:
+        elif isinstance(png_info[key]) == str:
             val = "'{}'".format(png_info[key])
             singlecmd = insert_form.format(field=key, value=val)
             insert_list.append(singlecmd)
         else:
             singlecmd = insert_form.format(field=key, value=png_info[key])
             insert_list.append(singlecmd)
+
     insert_string = ''
     for part in insert_list:
         if insert_string == '':
             insert_string = part
         else:
             insert_string = insert_string + ', ' + part
+
     cmd = insert_cmd.format(stuff=insert_string)
     return cmd
 
 def create_cmds(web2py_script, which_images):
+    """
+    Creates an initial command, a series of insert commands, and
+        a final commit command. These are relevant to a list of images
+        to be inserted, and a specific webapp to be populated.
+    """
     int_cmd = 'python {web2py_s} -S MKE_Static_Name -M -R '
     int_cmd = int_cmd.format(web2py_s=web2py_script)
     upload_cmds = []
@@ -146,6 +169,10 @@ def create_cmds(web2py_script, which_images):
     return int_cmd, upload_cmds, commit_cmd
 
 def create_python_scripts(up_cmds, commit_cmd, which_app):
+    """
+    Creates a script, from a series of commands,
+        to be read by an interpreter.
+    """
     path_form = './populators/{}_populator.py'
     path = os.path.abspath(path_form.format(which_app))
     create_dirs(path_form[:-15])
@@ -157,6 +184,7 @@ def create_python_scripts(up_cmds, commit_cmd, which_app):
 
 
 def pass_cmds(int_cmd, py_pop):
+    """Run py_pop commands in a web2py environment spawned by int_cmd."""
     import subprocess
     master_cmd = (int_cmd + py_pop).split(' ')
     first = subprocess.Popen(master_cmd)
@@ -164,6 +192,10 @@ def pass_cmds(int_cmd, py_pop):
     return None
 
 def populate_web_app(which_app, which_images, w_os):
+    """
+    Runs everything, populates a single webapp with a set of images,
+        for a specific operating system.
+    """
     check_images_exist(which_images)
     web2py = os.path.abspath(grab_web2py_script_path(which_app, w_os))
     int_cmd, up_cmds, commit_cmd = create_cmds(web2py, which_images)
@@ -172,10 +204,9 @@ def populate_web_app(which_app, which_images, w_os):
     return None
 
 if __name__ == "__main__":
-    which_app = 'P1'
-    which_images = ['../images/processed_images/M2JT0000/M2JT0000.png',
+    WHICH_APP = 'P1'
+    WHICH_IMAGES = ['../images/processed_images/M2JT0000/M2JT0000.png',
                     '../images/processed_images/M2JT0001/M2JT0001.png',
-                    '../images/processed_images/M2JT0002/M2JT0002.png'
-                    ]
-    w_os = 'mac'
-    populate_web_app(which_app, which_images, w_os)
+                    '../images/processed_images/M2JT0002/M2JT0002.png']
+    W_OS = 'mac'
+    populate_web_app(WHICH_APP, WHICH_IMAGES, W_OS)

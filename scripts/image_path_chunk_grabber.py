@@ -38,8 +38,10 @@ Done:
 import os
 
 def grab_image_paths():
+    """Returns a list of processed png image paths"""
     image_path_list = []
-    for root, dirs, files in os.walk("../images/processed_images", topdown=False):
+    for root, dirs, files in os.walk("../images/processed_images",
+                                     topdown=False):
         del dirs
         for name in files:
             if name[-4:] == '.png':
@@ -47,10 +49,14 @@ def grab_image_paths():
     return image_path_list
 
 def chunk_it_out(image_path_list, images_per_app):
+    """
+    Returns a list of arrays, each array has a maximum number of
+        images that is specified by images_per_app.
+    """
     array_list = []
     while len(image_path_list) > 0:
         array = []
-        for it in range(images_per_app):
+        for _ in range(images_per_app):
             if len(image_path_list) == 0:
                 break
             array.append(image_path_list.pop(0))
@@ -59,6 +65,10 @@ def chunk_it_out(image_path_list, images_per_app):
     return array_list
 
 def image_path_chunk_grabber(images_per_app):
+    """
+    Assigns each array of image paths a key in a dictionary,
+        which corresponds to which application the images will belong to.
+    """
     path_list = grab_image_paths()
     chunk_list = chunk_it_out(path_list, images_per_app)
     count = 0
@@ -69,7 +79,7 @@ def image_path_chunk_grabber(images_per_app):
     return chunk_dict
 
 if __name__ == "__main__":
-    images_per_app = 66
-    chunks = image_path_chunk_grabber(images_per_app)
-    for part in chunks:
-        print part, '\n', chunks[part], '\n'
+    IMAGES_PER_APP = 66
+    CHUNKS = image_path_chunk_grabber(IMAGES_PER_APP)
+    for part in CHUNKS:
+        print part, '\n', CHUNKS[part], '\n'

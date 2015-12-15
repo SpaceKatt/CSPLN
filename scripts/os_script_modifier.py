@@ -40,6 +40,7 @@ Done:
 import os
 
 def grab_scripts():
+    """Grabs python scripts in the current directory."""
     file_list = os.listdir(os.getcwd())
     path_list = []
     for name in file_list:
@@ -48,16 +49,27 @@ def grab_scripts():
     return path_list
 
 def define_replacement():
+    """Returns a dictionary of replacements to be made."""
     replacements = {'\\\\':'/', "doesn/'t":"doesn\\'t", '/n': '\\n'}
     return replacements
 
 def replace_numbers(line, keys, rep_dict):
+    """
+    For every key in the dictionary,
+        if the key is found in the current line,
+            replace the key with its value.
+    Always return the line.
+    """
     for item in keys:
         if item in line:
             line = line.replace(item, rep_dict[item])
     return line
 
 def replace_file_contents(path, rep_dic):
+    """
+    For a file and dictionary of replacements,
+        perform said replacements and write over file.
+    """
     keys = rep_dic.keys()
     lines_to_write = []
     with open(path, 'r') as file_now:
@@ -70,6 +82,10 @@ def replace_file_contents(path, rep_dic):
     return None
 
 def main():
+    """
+    Grabs scripts in current directory, other than itself,
+        and performs replacements on every one.
+    """
     script_list = grab_scripts()
     rep_dict = define_replacement()
     print rep_dict
