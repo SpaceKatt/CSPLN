@@ -57,3 +57,6 @@ pip-delete-this-directory.txt
 
 # Generated stuff
 scripts/populators/
+scripts/*.pyc
+images/processed_images
+apps/web_apps

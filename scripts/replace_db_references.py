@@ -1,4 +1,22 @@
 '''
+<license>
+CSPLN_MaryKeelerEdition; Manages images to which notes can be added.
+Copyright (C) 2015, Thomas Kercheval
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+___________________________________________________________</license>
+
 Description:
     Replaces references to old databases in the scaffolding with references
         to the updated db_schema.
@@ -22,23 +40,6 @@ Done:
     Create replacement dictionaries.
     Read files, search for things in need of replacement,
         do replacement, write files.
-'''
-'''
-CSPLN_MaryKeelerEdition; Manages images to which notes can be added.
-Copyright (C) 2015, Thomas Kercheval
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
 import os, shutil
@@ -69,9 +70,6 @@ def grab_files_tobe_replaced(version):
     for path in views:
         paths.append(views_dir.format(ver=version, vfile=path))
     return paths
-
-def grab_text_from_path(file_obj):
-    pass
 
 def replace_complex(line, keys, rep_dict):
     for item in keys:

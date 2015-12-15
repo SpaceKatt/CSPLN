@@ -1,1 +1,0 @@
-{'name': 'M2JT0006', 'file': '../images/processed_images/M2JT0006\\M2JT0006', 'md5': '2ff96734229b385f3f57fc095d205611', 'tif_parent_md5': '248ff8db29f46742682554dc71fc6a3b', 'size_tiff_parent': 267330, 'size': 164588}

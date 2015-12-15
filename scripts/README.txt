@@ -18,7 +18,7 @@ Scope:
 Details:
 
 automate_everything.py
-
+        
     Description:
         Does it all! (more descriptive description later)
     
@@ -42,7 +42,7 @@ automate_everything.py
     Done:
 
 create_web_apps_linux.py
-
+        
     Description:
         For creating CSPLN webapps for LINUX, from scaffolding.
     
@@ -65,7 +65,7 @@ create_web_apps_linux.py
     Done:
 
 create_web_apps_mac.py
-
+        
     Description:
         For creating CSPLN webapps for MACINTOSH, from scaffolding.
     
@@ -88,7 +88,7 @@ create_web_apps_mac.py
     Done:
 
 create_web_apps_win.py
-
+        
     Description:
         For creating CSPLN webapps for WINDOWS, from scaffolding.
     
@@ -113,7 +113,7 @@ create_web_apps_win.py
         Delete examples and welcome apps in web2py framework.
 
 db_schemas.py
-
+        
     Description:
         This script simply copies the db schema into the scaffolding.
     
@@ -134,7 +134,7 @@ db_schemas.py
     Done:
 
 image_path_chunk_grabber.py
-
+        
     Description:
         Grabs chunks of image_paths to be processed by other scripts.
     
@@ -153,7 +153,7 @@ image_path_chunk_grabber.py
     Done:
 
 os_script_modifier.py
-
+        
     Description:
         Replaces certian parts of python scripts that are suspected to cause
             problems between different operating systems.
@@ -174,7 +174,7 @@ os_script_modifier.py
     Done:
 
 populate_web_app.py
-
+        
     Description:
         Populates single web_app with images,
             use interactive python environment w\web2py.
@@ -211,7 +211,7 @@ populate_web_app.py
                 Asked question on stackoverflow. (answered by Anthony)
 
 process_images.py
-
+        
     Description:
         Move tif files into '../images/raw_tiff', then run this script.
     
@@ -238,7 +238,7 @@ process_images.py
                 search/traceability.
 
 replace_db_references.py
-
+        
     Description:
         Replaces references to old databases in the scaffolding with references
             to the updated db_schema.
@@ -264,7 +264,7 @@ replace_db_references.py
             do replacement, write files.
 
 the_decider.py
-
+        
     Description:
         Decide how many web_apps to make,
             and how many images should be in each.
@@ -277,10 +277,10 @@ the_decider.py
         images_per_app
     
     Currently:
-    
-    To Do:
         Add support for prime numbers of images.
             Prime numbers of images might create an infinite loop...
+    
+    To Do:
     
     Done:
         Take average image size.
@@ -289,7 +289,7 @@ the_decider.py
             images based on how many images_per_app.
 
 update_readme.py
-
+        
     Description:
         Updates README.txt file in current directory.
     
@@ -304,12 +304,12 @@ update_readme.py
     
     To Do:
         Include story.txt in the README.
-        
+    
     Done:
         Update readme file with current functions&&their docstrings.
 
 view_change.py
-
+        
     Description:
         Changes the 'default/index.html' view to reflect the correct
             image numbers.

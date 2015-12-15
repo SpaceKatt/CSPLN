@@ -1,4 +1,22 @@
 '''
+<license>
+CSPLN_MaryKeelerEdition; Manages images to which notes can be added.
+Copyright (C) 2015, Thomas Kercheval
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+___________________________________________________________</license>
+
 Description:
     For creating CSPLN webapps for MACINTOSH, from scaffolding.
 
@@ -19,23 +37,6 @@ Currently:
 To Do:
 
 Done:
-'''
-'''
-CSPLN_MaryKeelerEdition; Manages images to which notes can be added.
-Copyright (C) 2015, Thomas Kercheval
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
 import os, sys, shutil
@@ -94,25 +95,6 @@ def grab_filename_from_path(in_path):
     head, tail = ntpath.split(in_path)
     return tail or ntpath.basename(head)
 
-#def create_bat(out_path, num):
-#    mkebat = '../apps/scaffolding/common/MKE_PT_.bat'
-#    check_file_exist(mkebat)
-#    shutil.copy(mkebat, out_path)
-#    old_name = os.path.join(out_path, 'MKE_PT_.bat')
-#    exe_name = 'MKE_PT_{}.bat'.format(num)
-#    new_name = os.path.join(out_path, exe_name)
-#    print old_name, new_name
-#    os.rename(old_name, new_name)
-#    return None
-
-#def rename_exe(path, num):
-#    old_name = os.path.join(path, 'web2py.exe')
-#    exe_name = 'MKE_PT_{}.exe'.format(num)
-#    new_name = os.path.join(path, exe_name)
-#    print old_name, new_name
-#    os.rename(old_name, new_name)
-#    return None
-
 def modify_webframez(out_paths, num_apps):
     assert len(out_paths) == int(num_apps)
     num = 1
@@ -134,7 +116,6 @@ def copy_app(version, out_paths):
 
 def deploy_scaffolding(version, num_apps):
     out_paths = copy_webframez(num_apps)
-#    modify_webframez(out_paths, num_apps)
     new_paths = modify_out_paths(out_paths)
     copy_app(version, new_paths)
     return None

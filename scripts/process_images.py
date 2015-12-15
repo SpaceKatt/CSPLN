@@ -1,4 +1,22 @@
 '''
+<license>
+CSPLN_MaryKeelerEdition; Manages images to which notes can be added.
+Copyright (C) 2015, Thomas Kercheval
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+___________________________________________________________</license>
+
 Description:
     Move tif files into '../images/raw_tiff', then run this script.
 
@@ -24,23 +42,6 @@ Done:
         This change would prevent information loss and allow for better
             search/traceability.
 '''
-'''
-CSPLN_MaryKeelerEdition; Manages images to which notes can be added.
-Copyright (C) 2015, Thomas Kercheval
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-'''
 
 import os, sys, shutil
 from PIL import Image
@@ -54,17 +55,12 @@ def check_file_exist(path):
     return None
 
 def grab_file_paths():
-#    filename_list = []
-#    dir_list = []
     image_path_list = []
     for root, dirs, files in os.walk("../images/raw_tiff", topdown=False):
         del dirs
         for name in files:
             image_path_list.append((os.path.join(root, name)))
-#            filename_list.append(name)
-#        for name in dirs:
-#            dir_list.append((os.path.join(root, name)))
-    return image_path_list#, dir_list, filename_list
+    return image_path_list
 
 def grab_out_paths(image_path_list):
     out_dir = '../images/processed_images/{pat}'
@@ -79,11 +75,9 @@ def grab_out_paths(image_path_list):
 
 def grab_file_size(file_path):
     data = os.path.getsize(file_path)
-    #print data
     return data
 
 def md5check_grab(file_path):
-    #print file_path
     check_file_exist(file_path)
     md5sum = hashlib.md5(open(file_path, 'rb').read()).hexdigest()
     print '   md5: ', md5sum
@@ -102,7 +96,6 @@ def copy_tiff_to_final_loc(tiff_path, out_path, file_name):
     shutil.copy(tiff_path, out_path)
     size_file = grab_file_size(out_path)
     md5 = md5check_grab(out_path)
-    #deletetiff
     return md5, size_file
 
 def create_dirs(out_paths):
@@ -114,14 +107,10 @@ def create_dirs(out_paths):
 def write_image_meta(im_path, file_name, data):
     meta_file = os.path.join(im_path, file_name+'.txt')
     with open(meta_file, 'w') as meta_stuff:
-#        keys = data.keys()
-#        for key in keys:
-#        strin = '{} = {}\n'.format(key, data[key])
         meta_stuff.write(str(data))
     return None
 
 def write_meta_data(data):
-    #print data
     meta_path = '../data/{}.txt'
     keys = data.keys()
     for key in keys:
@@ -152,7 +141,6 @@ def auto_rawr():
     create_dirs(out_p)
     assert len(image_paths) == len(out_p) == len(file_n)
     for num in range(len(image_paths)):
-        #print image_paths[num], out_p[num], file_n[num]
         dic = process_image(image_paths[num], out_p[num], file_n[num])
         png_file_size[dic['md5']] = dic['size']
         tif_file_size[dic['tif_parent_md5']] = dic['size_tiff_parent']
