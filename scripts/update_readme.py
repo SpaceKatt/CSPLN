@@ -48,6 +48,7 @@ def discover_functions():
     return function_names
 
 def grab_docstrings(fcn_names):
+    """"Grabs the docstrings of all python modules specified."""
     import ast
     docstrings = {}
     for name in fcn_names:
@@ -57,6 +58,7 @@ def grab_docstrings(fcn_names):
     return docstrings
 
 def create_readme():
+    """Strips off license statement, formats readme, returns readme text."""
     end_lisence = "</license>"
     scope = '''Scope:
     {}'''
@@ -80,16 +82,17 @@ def create_readme():
         scopestuff += item
     for ano_item in detaillist:
         detailstuff += ano_item
-    part_1 = scope.format(scopestuff[:-4]) + '\n'
-    part_2 = details.format(detailstuff) + '\n'
-    readme = part_1 + part_2
+    readme = (scope.format(scopestuff[:-4]) + '\n'
+              + details.format(detailstuff) + '\n')
     return readme
 
 def write_readme(r_text):
+    """Writes the readme!"""
     with open('./README.txt', 'w') as readme:
         readme.write(r_text)
 
 def update_readme():
+    """Updates the readme everytime `./automate_everything.py` is run."""
     note = '''For higher level to-do-list, see \'./story.txt\'.\n\n'''
     readme_text = create_readme()
     readme_text = note + readme_text

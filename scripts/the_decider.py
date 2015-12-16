@@ -40,16 +40,17 @@ Done:
     Decide how many applications will be nessecary to contain all
         images based on how many images_per_app.
 '''
-
-import os, math
+import ast
 
 def grab_png_data():
+    """Gathers png (processed images) size data."""
     path = '../data/png_sizes.txt'
     with open(path, 'r') as dict_file:
-        dictionary = eval(dict_file.read())
+        dictionary = ast.literal_eval(dict_file.read())
         return dictionary
 
 def take_average(dictionary):
+    """Takes the average size of all png files."""
     md5s = dictionary.keys()
     total, count = 0, 0
     for md5 in md5s:
@@ -59,10 +60,11 @@ def take_average(dictionary):
     return average
 
 def how_many_images_fit(average, total_image_num):
+    """Determines how many images can fit into a 800MB application."""
     eighthundomb = 800 * (10 ** 6)
     average_fit = eighthundomb // average
     images_per_app = average_fit
-    for nothing in range(images_per_app, images_per_app / 2, -1):
+    for _ in range(images_per_app, images_per_app / 2, -1):
         images_per_app -= 1
         if total_image_num % images_per_app == 0:
             break
@@ -71,18 +73,26 @@ def how_many_images_fit(average, total_image_num):
     return images_per_app
 
 def apps_number(images_per_app, total_image_num):
+    """
+    From the amount of images that can fit into a single application,
+        and the total amount of images, determines how many applications
+        should be made.
+    """
     how_many_apps = total_image_num // images_per_app
     if total_image_num % images_per_app != 0:
         how_many_apps += 1
     return how_many_apps
 
 def the_decider(total_image_num):
+    """
+    Decides how many images each app should hold and how many apps to create.
+    """
     average = take_average(grab_png_data())
     images_per_app = how_many_images_fit(average, total_image_num)
     how_many_apps = apps_number(images_per_app, total_image_num)
     return how_many_apps, images_per_app
 
 if __name__ == "__main__":
-    total_image_num = 659
-    how_many, images_per = the_decider(total_image_num)
-    print 'How many apps: ', how_many, '\n', 'Images per app: ', images_per
+    TOTAL_IMAGE_NUM = 659
+    HOW_MANY, IMAGES_PER = the_decider(TOTAL_IMAGE_NUM)
+    print 'How many apps: ', HOW_MANY, '\n', 'Images per app: ', IMAGES_PER

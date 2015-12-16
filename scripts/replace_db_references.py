@@ -42,16 +42,23 @@ Done:
         do replacement, write files.
 '''
 
-import os, shutil
+import os
 
 def check_file_exist(path):
+    """Check if the file at the given path exists."""
     if os.path.exists(path):
         print path, 'exists!'
     else:
+        import sys
         sys.exit('File {} doesn\'t exist'.format(path))
     return None
 
 def grab_replacement_dictionaries():
+    """
+    Defines replacements to be made, seperates them by how many layers
+        of specificity is given. Less specific replacements should take
+        place after more specific replacements are made.
+    """
     more_complex = {
         'page.title':'image.name', 'page.file':'image.file',
         'comment.page_id':'note.image_id', 'comment.author':'note.user_id',
@@ -62,6 +69,10 @@ def grab_replacement_dictionaries():
     return more_complex, less_comp
 
 def grab_files_tobe_replaced(version):
+    """
+    Grabs the paths of files where database reference replacement
+        is needed.
+    """
     paths = []
     controllers = '../apps/scaffolding/version/MKE_v{}/controllers/default.py'
     views_dir = '../apps/scaffolding/version/MKE_v{ver}/views/{vfile}'
@@ -72,18 +83,21 @@ def grab_files_tobe_replaced(version):
     return paths
 
 def replace_complex(line, keys, rep_dict):
+    """Replaces the more specific items found in a line."""
     for item in keys:
         if item in line:
             line = line.replace(item, rep_dict[item])
     return line
 
 def replace_less_complex(line, lesser_keys, less_dic):
+    """Replaces the less specific items found in a line."""
     for lesser_item in lesser_keys:
         if lesser_item in line:
             line = line.replace(lesser_item, less_dic[lesser_item])
     return line
 
 def replace_file_contents(path, rep_dic, less_rep):
+    """For a given file, performs the necessary replacements."""
     keys = rep_dic.keys()
     lesser_keys = less_rep.keys()
     lines_to_write = []
@@ -95,9 +109,15 @@ def replace_file_contents(path, rep_dic, less_rep):
     with open(path, 'w') as file_again:
         for w_line in lines_to_write:
             file_again.write(w_line)
-
+    return None
 
 def replace_db_references(version):
+    """
+    For a specific version of the scaffolding application,
+        gathers the specified replacements and performs them.
+    Is only necessary to run this when working with unaltered
+        web2py framework.
+    """
     replacements, lesser_rep = grab_replacement_dictionaries()
     paths = grab_files_tobe_replaced(version)
     for path in paths:
@@ -107,5 +127,5 @@ def replace_db_references(version):
     return None
 
 if __name__ == "__main__":
-    version = '00_01_02'
-    replace_db_references(version)
+    VERSION = '00_01_02'
+    replace_db_references(VERSION)

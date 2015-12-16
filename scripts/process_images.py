@@ -1,4 +1,4 @@
-'''
+"""
 <license>
 CSPLN_MaryKeelerEdition; Manages images to which notes can be added.
 Copyright (C) 2015, Thomas Kercheval
@@ -41,7 +41,7 @@ Done:
         This is important because we can present data as; {md5, size}.
         This change would prevent information loss and allow for better
             search/traceability.
-'''
+"""
 
 import os, sys, shutil
 from PIL import Image
@@ -56,6 +56,7 @@ def check_file_exist(path):
     return None
 
 def grab_file_paths():
+    """Grabs the paths of images to be processed and puts them in a list."""
     image_path_list = []
     for root, dirs, files in os.walk("../images/raw_tiff", topdown=False):
         del dirs
@@ -64,6 +65,7 @@ def grab_file_paths():
     return image_path_list
 
 def grab_out_paths(image_path_list):
+    """Returns a list of filenames and the outpaths of processed images."""
     out_dir = '../images/processed_images/{pat}'
     image_name_form = 'M2JT{}'
     out_paths = []
@@ -75,16 +77,19 @@ def grab_out_paths(image_path_list):
     return out_paths, file_names
 
 def grab_file_size(file_path):
+    """Returns the size of a file."""
     data = os.path.getsize(file_path)
     return data
 
 def md5check_grab(file_path):
+    """Returns an md5 signature of a file."""
     check_file_exist(file_path)
     md5sum = hashlib.md5(open(file_path, 'rb').read()).hexdigest()
     print '   md5: ', md5sum
     return md5sum
 
 def transform_tiff_to_png(tiff_path, out_path, file_name):
+    """For a single tiff file, create a png file, return its md5 and size."""
     new_path = os.path.join(out_path, file_name+'.png')
     image = Image.open(tiff_path)
     image.save(new_path)
@@ -93,6 +98,7 @@ def transform_tiff_to_png(tiff_path, out_path, file_name):
     return md5, size_file
 
 def copy_tiff_to_final_loc(tiff_path, out_path, file_name):
+    """Copy the original tiff to where its png counterpart is stored."""
     out_path = os.path.join(out_path, file_name+'.tif')
     shutil.copy(tiff_path, out_path)
     size_file = grab_file_size(out_path)
@@ -100,18 +106,26 @@ def copy_tiff_to_final_loc(tiff_path, out_path, file_name):
     return md5, size_file
 
 def create_dirs(out_paths):
+    """If a directory doesn't exist, create it."""
     for path in out_paths:
         if not os.path.exists(path):
             os.makedirs(path)
     return None
 
 def write_image_meta(im_path, file_name, data):
+    """Writes image metadata to a file in the same directory as the png."""
     meta_file = os.path.join(im_path, file_name+'.txt')
     with open(meta_file, 'w') as meta_stuff:
         meta_stuff.write(str(data))
     return None
 
 def write_meta_data(data):
+    """
+    Records sizes of all the pngs/tiffs in files that can later
+        be read as dictionaries.
+    ../data/png_sizes.txt
+    ../data/tif_sizes.txt
+    """
     meta_path = '../data/{}.txt'
     keys = data.keys()
     for key in keys:
@@ -121,6 +135,12 @@ def write_meta_data(data):
     return None
 
 def process_image(image, out, fil):
+    """
+    For a single image, make a png, send the png to its ordered location,
+        send a copy of the original tiff to the same location, record the
+        necessary metadata, then write the image's metadata in the same
+        location.
+    """
     image_meta = {}
     md5png, png_sizei = transform_tiff_to_png(image, out, fil)
     md5tif, tif_sizei = copy_tiff_to_final_loc(image, out, fil)
@@ -134,6 +154,12 @@ def process_image(image, out, fil):
     return image_meta
 
 def auto_rawr():
+    """
+    Grabs the input paths (image file paths) and output paths (ordered
+        file locations), creates directories at the outpaths, then
+        processes each image and records their sizes in two dictionaries.
+        These dictionaries are stored in files in ../data
+    """
     png_file_size = {}
     tif_file_size = {}
     meta_d = {}
@@ -150,6 +176,7 @@ def auto_rawr():
     return meta_d
 
 def in_summary():
+    """Processes everything and records necessary information."""
     stuff = auto_rawr()
     write_meta_data(stuff)
     return None
