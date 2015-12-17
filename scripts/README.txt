@@ -37,7 +37,8 @@ automate_everything.py
     Currently:
     
     To Do:
-        Rewrite Description, Inputs, and Outputs
+        Rewrite Description, Inputs, and Outputs.
+        Create version_search, which determines most up to date version.
     
     Done:
 
@@ -118,7 +119,6 @@ db_schemas.py
         This script simply copies the db schema into the scaffolding.
     
     Inputs:
-        Version of scaffolding, 'xx_xx_xx'.
         Path of database schema.
         Path of db.py in scaffolding, 'MKE_vxx_xx_xx'
     

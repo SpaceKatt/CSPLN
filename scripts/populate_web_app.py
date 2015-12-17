@@ -135,7 +135,7 @@ def create_single_cmd(image_path):
             object_file = "open('{}', 'rb')".format(png_info[key])
             single_cmd = insert_form.format(field=key, value=object_file)
             insert_list.append(single_cmd)
-        elif isinstance(png_info[key]) == str:
+        elif isinstance(png_info[key], str):
             val = "'{}'".format(png_info[key])
             singlecmd = insert_form.format(field=key, value=val)
             insert_list.append(singlecmd)
