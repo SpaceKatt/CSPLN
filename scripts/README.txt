@@ -236,6 +236,7 @@ process_images.py
             This is important because we can present data as; {md5, size}.
             This change would prevent information loss and allow for better
                 search/traceability.
+        Store original file name in metadata!
 
 replace_db_references.py
         

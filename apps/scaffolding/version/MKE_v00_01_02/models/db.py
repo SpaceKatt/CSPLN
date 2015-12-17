@@ -8,6 +8,7 @@ auth.define_tables(username=True)
 
 db.define_table('image',
                 Field('name', unique=True),
+                Field('original_name', unique=True),
                 Field('md5', 'string', unique=True),
                 Field('size', 'integer'),
                 Field('tif_parent_md5', 'string', unique=True),

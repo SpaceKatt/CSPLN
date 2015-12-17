@@ -41,6 +41,7 @@ Done:
         This is important because we can present data as; {md5, size}.
         This change would prevent information loss and allow for better
             search/traceability.
+    Store original file name in metadata!
 """
 
 import os, sys, shutil
@@ -88,14 +89,21 @@ def md5check_grab(file_path):
     print '   md5: ', md5sum
     return md5sum
 
+def grab_filename_from_path(in_path):
+    """Input a path, return last chunck"""
+    import ntpath
+    head, tail = ntpath.split(in_path)
+    return tail or ntpath.basename(head)
+
 def transform_tiff_to_png(tiff_path, out_path, file_name):
     """For a single tiff file, create a png file, return its md5 and size."""
     new_path = os.path.join(out_path, file_name+'.png')
     image = Image.open(tiff_path)
+    original_name = grab_filename_from_path(tiff_path)[:-4]
     image.save(new_path)
     size_file = grab_file_size(new_path)
     md5 = md5check_grab(new_path)
-    return md5, size_file
+    return md5, size_file, original_name
 
 def copy_tiff_to_final_loc(tiff_path, out_path, file_name):
     """Copy the original tiff to where its png counterpart is stored."""
@@ -142,13 +150,14 @@ def process_image(image, out, fil):
         location.
     """
     image_meta = {}
-    md5png, png_sizei = transform_tiff_to_png(image, out, fil)
+    md5png, png_sizei, original_name = transform_tiff_to_png(image, out, fil)
     md5tif, tif_sizei = copy_tiff_to_final_loc(image, out, fil)
     image_meta['md5'] = str(md5png)
     image_meta['size'] = int(png_sizei)
     image_meta['tif_parent_md5'] = str(md5tif)
     image_meta['size_tiff_parent'] = int(tif_sizei)
     image_meta['name'] = fil
+    image_meta['original_name'] = original_name
     image_meta['file'] = os.path.join(out, fil)
     write_image_meta(out, fil, image_meta)
     return image_meta

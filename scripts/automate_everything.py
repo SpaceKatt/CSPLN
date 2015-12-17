@@ -66,7 +66,7 @@ def prepare_png_images():
     Decides how png images will be distributed between a number of apps.
     """
     total_image_num = discover_how_many_tifs()
-    #process_images.in_summary()
+    process_images.in_summary()
     how_many_apps, images_per_app = t_d.the_decider(total_image_num)
     return how_many_apps, images_per_app
 
