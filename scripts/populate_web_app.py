@@ -59,7 +59,7 @@ import os, sys
 def check_file_exist(path):
     """Check if the file at the given path exists."""
     if os.path.exists(path):
-        print path, 'exists!'
+        pass
     else:
         sys.exit('File {} doesn\'t exist'.format(path))
     return None
@@ -93,7 +93,7 @@ def grab_web2py_script_path(which_app, w_os):
     else:
         path_form = '../apps/web_apps/{os}/{app}/web2py/web2py.py'
         path = path_form.format(os=w_os, app=str(which_app))
-    print path
+    print "    web2py script path: {}\n".format(path)
     return path
 
 def grab_txt(image_name):
@@ -130,6 +130,7 @@ def create_single_cmd(image_path):
     insert_cmd = 'db.image.insert({stuff})'
     insert_list = []
 
+    print "Preparing {} for insertion...".format(png_info['name'])
     for key in keys:
         if key == 'file':
             object_file = "open('{}', 'rb')".format(png_info[key])
@@ -187,6 +188,7 @@ def pass_cmds(int_cmd, py_pop):
     """Run py_pop commands in a web2py environment spawned by int_cmd."""
     import subprocess
     master_cmd = (int_cmd + py_pop).split(' ')
+    print "\n    Communicating insertions...\n"
     first = subprocess.Popen(master_cmd)
     first.communicate()
     return None
@@ -196,6 +198,9 @@ def populate_web_app(which_app, which_images, w_os):
     Runs everything, populates a single webapp with a set of images,
         for a specific operating system.
     """
+    print ("\n    Now populating {which} of the {oz} application.".format(
+                            which=which_app, oz=w_os))
+    print "_"*79 + "\n"
     check_images_exist(which_images)
     web2py = os.path.abspath(grab_web2py_script_path(which_app, w_os))
     int_cmd, up_cmds, commit_cmd = create_cmds(web2py, which_images)

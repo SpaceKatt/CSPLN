@@ -44,7 +44,7 @@ import os, sys, shutil
 def check_file_exist(path):
     """Check if the file at the given path exists."""
     if os.path.exists(path):
-        print path, 'exists!'
+        pass
     else:
         sys.exit('File {} doesn\'t exist'.format(path))
     return None
@@ -59,6 +59,7 @@ def grab_out_paths(number_apps):
     out_paths = []
     for num in range(1, number_apps + 1):
         strin = project_part.format(str(num))
+        print "{part}, preparing for generation.".format(part=strin)
         out_paths.append(out_dir.format(pat=strin))
     return out_paths
 
@@ -84,8 +85,7 @@ def copy_webframez(num_apps):
     mac_path = 'web2py'
     for path in out_paths:
         shutil.copytree(webframe, os.path.join(path, mac_path))
-        print 'web2py frame copied to: {}'.format(path)
-    print out_paths
+        print '    web2py frame copied to: {}'.format(path)
     return out_paths
 
 def modify_out_paths(int_paths):
@@ -98,7 +98,6 @@ def modify_out_paths(int_paths):
     for path in int_paths:
         new_path = os.path.join(path, addition)
         mod_out.append(new_path)
-    print mod_out
     return mod_out
 
 def grab_filename_from_path(in_path):
@@ -126,6 +125,7 @@ def deploy_scaffolding(current_version, num_apps):
     Deploys the web2py framework and the current version of our
         scaffolding, as many times as is necessary.
     """
+    print "\n    Creating Mac applications...\n" + "_"*79
     out_paths = copy_webframez(num_apps)
     new_paths = modify_out_paths(out_paths)
     copy_app(current_version, new_paths)

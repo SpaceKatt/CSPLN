@@ -72,6 +72,7 @@ def create_readme():
     scripts = doc_dic.keys()
     scripts.sort()
     for script in scripts:
+        print "Creating readme entry for: {}...".format(script)
         scopelist.append(script+'\n    ')
         docstring = doc_dic[script].replace('\n', '\n    ')
         doc_index = docstring.find(end_lisence) + 11

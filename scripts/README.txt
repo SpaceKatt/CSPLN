@@ -11,6 +11,7 @@ Scope:
     populate_web_app.py
     process_images.py
     replace_db_references.py
+    reset_system.py
     the_decider.py
     update_readme.py
     view_change.py
@@ -263,6 +264,26 @@ replace_db_references.py
         Create replacement dictionaries.
         Read files, search for things in need of replacement,
             do replacement, write files.
+
+reset_system.py
+        
+    Description:
+        Deletes all generated files.
+        Resets the system for further testing.
+    
+    Inputs:
+        Generated files.
+    
+    Outputs:
+        Environment fresh for generation.
+    
+    Currently:
+    
+    
+    To Do:
+    
+    Done:
+        Resets the system so `./automate_everything.py` may be run
 
 the_decider.py
         

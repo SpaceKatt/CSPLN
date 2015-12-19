@@ -51,7 +51,7 @@ import hashlib
 def check_file_exist(path):
     """Check if the file at the given path exists."""
     if os.path.exists(path):
-        print path, 'exists!'
+        pass
     else:
         sys.exit('File {} doesn\'t exist'.format(path))
     return None
@@ -86,7 +86,8 @@ def md5check_grab(file_path):
     """Returns an md5 signature of a file."""
     check_file_exist(file_path)
     md5sum = hashlib.md5(open(file_path, 'rb').read()).hexdigest()
-    print '   md5: ', md5sum
+    file_name = grab_filename_from_path(file_path)
+    print '   {file}, md5: {m5}'.format(file=file_name, m5=md5sum)
     return md5sum
 
 def grab_filename_from_path(in_path):
@@ -111,6 +112,8 @@ def copy_tiff_to_final_loc(tiff_path, out_path, file_name):
     shutil.copy(tiff_path, out_path)
     size_file = grab_file_size(out_path)
     md5 = md5check_grab(out_path)
+    print ("{tif} has been recorded as {fil}".format(
+             tif=grab_filename_from_path(tiff_path), fil=file_name))
     return md5, size_file
 
 def create_dirs(out_paths):

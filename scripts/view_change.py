@@ -47,7 +47,8 @@ def gather_info(app_part, first_path):
     first_num = first_path[-8:-4]
     while first_num[0] == str(0) and len(first_num) > 1:
         first_num = first_num[1:]
-    print first_num
+    print "    The first image number in this index is: {first}".format(
+                                                         first=first_num)
     return app_part, first_num
 
 def grab_view_path(which_app, w_os):
@@ -106,5 +107,5 @@ def replace_view(app_part, first_path, w_os):
     path = grab_view_path(which_app, w_os)
     rep_dict = define_replacement(first_num)
     replace_file_contents(path, rep_dict)
-    print path, rep_dict
+    print "Finished {part}.\n".format(part=app_part) + "_"*79
     return None

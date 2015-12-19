@@ -92,6 +92,7 @@ def final(curr_version):
     print '\nApps nessecary: ', how_many_apps
     print '\nImages per app: ', images_per_app, '\n'
     create_web_app_population(curr_version, how_many_apps, images_per_app)
+    print "\n    Finished, now updating readme...\n"
     update_readme.update_readme()
     return None
 
