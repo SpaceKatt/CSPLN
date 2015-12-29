@@ -5,37 +5,37 @@
 #*.so
 
 # Distribution / packaging
-#.Python
-#develop-eggs/
-#dist/
-#eggs/
-#.eggs/
-#parts/
-#sdist/
-#var/
-#*.egg-info/
-##.installed.cfg
-#*.egg
+.Python
+develop-eggs/
+dist/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
 
 # PyInstaller
 # Usually these files are written by a python script from a template
 # before PyInstaller builds the exe, so as to inject date/other infos into it.
-#*.manifest
-#*.spec
+*.manifest
+*.spec
 
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
-#htmlcov/
-#.tox/
-#.coverage
-#.coverage.*
-#.cache
-#nosetests.xml
-#coverage.xml
-#*,cover
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
 
 # Translations
 #*.mo
@@ -58,6 +58,10 @@ pip-delete-this-directory.txt
 # Generated stuff
 scripts/populators/
 scripts/*.pyc
+utility/*.pyc
+test/*.pyc
+test/*/*.pyc
 scripts/null/
 images/processed_images
+images/processed_wcb_images
 apps/web_apps
