@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files
-#__pycache__/
+__pycache__/
 
 # C extensions
 #*.so
@@ -38,14 +38,14 @@ coverage.xml
 *,cover
 
 # Translations
-#*.mo
-#*.pot
+*.mo
+*.pot
 
 # Django stuff:
-#*.log
+*.log
 
 # Sphinx documentation
-#docs/_build/
+docs/_build/
 
 # PyBuilder
 #target/
