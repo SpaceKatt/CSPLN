@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
-'''
-Module that runs pylint on all python scripts found in a directory tree..
-'''
+"""
+Module that runs pylint on all python scripts found in a directory tree...
+
+Modifed version of a script found here:
+    https://gist.github.com/PatrickSchiffmann/94b31329fbcef92bead8
+"""
 
 import os
 import re
