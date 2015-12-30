@@ -34,10 +34,11 @@ To Do:
 Done:
 """
 
-import test_color_bar_remover as t_c_b
+import test.test_utility.test_color_bar_remover as t_c_b
 
 def run_tests():
+    """Runs all tests of utility functions."""
     t_c_b.test_color_bar_removal()
-    
+
 if __name__ == "__main__":
     run_tests()

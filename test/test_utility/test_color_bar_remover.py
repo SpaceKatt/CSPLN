@@ -39,28 +39,27 @@ import sys
 import os
 import shutil
 from PIL import Image
-import webbrowser
 
-basepath = os.path.dirname(__file__) # Path to this file. 
-folderpath = os.path.abspath(os.path.join(basepath, "..", "..", "utility"))
-sys.path.insert(0, folderpath) # Adding utility file to system path.
+BASEPATH = os.path.dirname(__file__) # Path to this file.
+FOLDERPATH = os.path.abspath(os.path.join(BASEPATH, "..", "..", "utility"))
+sys.path.insert(0, FOLDERPATH) # Adding utility file to system path.
 import color_bar_remover as c_b # Import from utitity file.
 
 # Defining paths such that they many be defined relatively and called from
 #     a directory that is not their own.
-TEST_IMAGE_DIR = os.path.abspath(os.path.join(basepath, "..", 
-                                 "test_processed_images"))
+DIR_NAME = "test_processed_images"
+TEST_IMAGE_DIR = os.path.abspath(os.path.join(BASEPATH, "..", DIR_NAME))
 IMAGE_DICT = {"path":TEST_IMAGE_DIR, "bar_size":31}
-TEST_IMAGE = os.path.abspath(os.path.join(basepath, "..", 
-                             "test_processed_images/M2JT0000.tif"))
-GENERATED_PATH = os.path.abspath(os.path.join(basepath, "..", 
-                                 "test_processed_wcb_images/M2JTwcb0000.tif"))
-CROP_IMAGE_DIR = os.path.abspath(os.path.join(basepath, "..", 
-                                 "test_processed_wcb_images"))
+TEST_PATH = "test_processed_images/M2JT0000.tif"
+TEST_IMAGE = os.path.abspath(os.path.join(BASEPATH, "..", TEST_PATH))
+GENERATED_NAME = "test_processed_wcb_images/M2JTwcb0000.tif"
+GENERATED_PATH = os.path.abspath(os.path.join(BASEPATH, "..", GENERATED_NAME))
+CROP_DIR = "test_processed_wcb_images"
+CROP_IMAGE_DIR = os.path.abspath(os.path.join(BASEPATH, "..", CROP_DIR))
 
 def set_up():
     """
-    Checks if test image exists and deletes previously 
+    Checks if test image exists and deletes previously
         processed test image.
     """
     print "Begining test of color bar removal from notebook images..."
@@ -73,34 +72,40 @@ def set_up():
 
 def tear_down():
     """Deletes processed test image."""
-    print "Ending test of color bar removal from notebook images..."    
-    print "_"*79
     shutil.rmtree(CROP_IMAGE_DIR)
+    print "Ending test of color bar removal from notebook images..."
+    print "_"*79
     return None
 
-def test_color_bar_removal():
-    """Tests the color bar removal function."""
-    set_up()
+def gather_original_image_info():
+    """Returns the original image dimensions."""
     print "Gathering information from original image..."
     original = Image.open(TEST_IMAGE)
     orig_width, orig_height = original.size
     original.close()
-    #print "Opening original image..."
-    #webbrowser.open(os.path.abspath(TEST_IMAGE))
+    return orig_width, orig_height
 
-    print "Processing image...\n\n"    
+def crop_image():
+    """Crops the original image and returns new cropped dimensions."""
+    print "Processing image...\n"
     c_b.does_it_all(IMAGE_DICT)
-    print "Gathering information from cropped color bar..."
-    cropped_image = Image.open(GENERATED_PATH)    
+    print "Gathering information from cropped image..."
+    cropped_image = Image.open(GENERATED_PATH)
     crop_width, crop_height = cropped_image.size
     cropped_image.close()
+    return crop_width, crop_height
+
+def test_color_bar_removal():
+    """Tests the color bar removal function."""
+    set_up()
+    orig_width, orig_height = gather_original_image_info()
+    crop_width, crop_height = crop_image()
     assert orig_height == crop_height
     print "Height remains unchanged..."
     assert orig_width == (crop_width + IMAGE_DICT["bar_size"])
     print "Specified amount was cropped off image..."
-    #print "Opening cropped image..."
-    #webbrowser.open(os.path.abspath(GENERATED_PATH))
     tear_down()
-    
+    return None
+
 if __name__ == "__main__":
     test_color_bar_removal()

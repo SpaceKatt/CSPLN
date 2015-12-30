@@ -36,7 +36,6 @@ Done:
 """
 
 from PIL import Image
-import sys
 import os
 
 def gather_image_paths(image_dir):
@@ -54,12 +53,15 @@ def define_out_paths(path_list):
     """Modifies image paths to their output form."""
     print "    Generating out paths, based on origianl image paths."
     out_path_list = []
+    # Defining the replacements to be made.
+    one = "processed_images"
+    two = "processed_wcb_images"
+    green = "M2JT"
+    blue = "M2JTwcb"
     for path in path_list:
-        out_path_list.append(path.replace("processed_images", 
-                                          "processed_wcb_images").replace(
-                                          "M2JT", "M2JTwcb"))
+        out_path_list.append(path.replace(one, two).replace(green, blue))
     return path_list, out_path_list
-    
+
 def crop_image(image_path, out_path, crop_amount):
     """Crops an image, by a specified amount, and saves it at a location."""
     original = Image.open(image_path)
@@ -69,7 +71,7 @@ def crop_image(image_path, out_path, crop_amount):
     print "    Saving cropped image at `{}`.".format(out_path)
     cropped_image.save(os.path.abspath(out_path))
     return None
-    
+
 def create_dirs(out_paths):
     """If a directory doesn't exist, create it."""
     import shutil
@@ -78,12 +80,12 @@ def create_dirs(out_paths):
             os.makedirs(path[:-12])
         else:
             shutil.rmtree(path[:-12])
-    return None    
+    return None
 
 def does_it_all(image_dict):
     """
     Uses all the functions and crops the color bar out of all the images...
-    
+
     image_dict - a dictionary with all of the nessecary information.
        keys:
            "path" - the path to the directory with images to process.
