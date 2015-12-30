@@ -1,6 +1,6 @@
 Project Objective:
     From a set of images, create a set of full-stack web applications to
-        host images.
+        host said images.
 
     Further utilities to aid in image analysis will be provided as separate
         components.

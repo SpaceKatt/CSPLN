@@ -1,7 +1,7 @@
 <todolist>
 
 Current project status:
-    Running! (confirmed for Windows&&Linux)
+    Running! (confirmed for Windows&&Linux&&Mac)
     Licensed
 
 Current activity:
@@ -17,7 +17,6 @@ To-Do:
         needed for Mac/Linux web2py packages.
     Add support for:
         Replicated images (non-unique md5s)
-        Prime numbers of images to be processed
 
 Done:
     CSPLN\scaffolding directory should have a subdirectory,
@@ -59,12 +58,15 @@ Done:
         index.html in the 'views\\default' directory should be looked at.
     Put smaller density *.tif files as examples on github,
         will make app easier to download and demonstrate.
+    Prime numbers of images can now be processed.
 
 Keep doing (for consistency):
     Have scaffolding version be a function input, this will make for
         easier transitions between versions.
     Have number_of_apps be a function input, this will make for
         easier transitions between versions.
+    Have functions accept dictionaries as inputs.
+    Document code as it's being written.
 
 
 </todolist>
@@ -115,5 +117,12 @@ Keep doing (for consistency):
         that I did automatically with incorrect string-escape notation.
     Learned to always test before you commit, it's too easy to get carried
         away with enthusiasm.
+
+30/Dec/2015
+    All os versions appear to be working.
+    Now moving on to build tests to support any future changes to the code.
+    Tests will also help document the structure of the code/problem
+        solving steps so that it will be easier to pick back up from where I
+        left off...
 
 </story>
