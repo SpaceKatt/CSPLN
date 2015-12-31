@@ -8,3 +8,8 @@ TESTING:
     2:
     > cd test
     > python run_all_tests.py
+
+PYLINT:
+    To pylint all project files:
+    > cd test
+    > python pylint_all_project_files.py

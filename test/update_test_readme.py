@@ -28,12 +28,17 @@ Outputs:
     README file in current directory.
 
 Currently:
-    Gather generated README's.
+    Creating README text.
 
 To Do:
-    Generate README in current directory.
+    Generate README in current directory,
+        form lower direcotry README's.
+    Generate subREADME in current direcotry,
+        to document scripts in this file.
+    Include subREADME in README.
 
 Done:
+    Gather generated README's.
     Call lower README generating functions.
 """
 
@@ -44,7 +49,6 @@ def discover_directories():
     """Discovers files in directory this file belongs to."""
     directories = []
     curr_dir = os.path.abspath(os.path.dirname(__file__))
-    print curr_dir
     subdirs = [x[0] for x in os.walk(curr_dir)]
     for dur in subdirs:
         if "README.txt" in os.listdir(dur) and dur[-4:] != "test":
@@ -60,7 +64,8 @@ def check_condition(file_name):
 def discover_readme_functions(dir_list):
     """
     From a list of directories, a list of README generating scripts
-        is created.
+        is created. These generating scripts must exist within one of the
+        direcotries specified as an element of the directory list.
     """
     readme_script_paths = []
     for dur in dir_list:
@@ -81,9 +86,16 @@ def call_readme_function(py_script):
     return None
 
 def generate_all_readmes(script_paths):
+    """For a list of paths, call the script located at each path."""
     for path in script_paths:
         call_readme_function(path)
     return None
+
+def grab_lastpart_from_path(in_path):
+    """Input a path, return last chunck"""
+    import ntpath
+    head, tail = ntpath.split(in_path)
+    return tail or ntpath.basename(head)
 
 def gather_readmes(directory_list):
     """
@@ -91,18 +103,53 @@ def gather_readmes(directory_list):
         then save them as values in a dictionary. The corresponding keys
         will be the name of the directory which contains them.
     """
+    print "_"*79
+    print "Gathering generated README's..."
     readme_dic = {}
-
+    for dur in directory_list:
+        files = [f for f in os.listdir(dur) if isfile(join(dur, f))]
+        for fil in files:
+            if fil == "README.txt":
+                dir_name = grab_lastpart_from_path(dur)
+                readme_dic[dir_name] = join(dur, fil)
     return readme_dic
+
+def grab_readme_snippet():
+    """Grabs the text to go at the top of the README."""
+    curr_dir = os.path.abspath(os.path.dirname(__file__))
+    with open(join(curr_dir, "readme_snippet.txt"), "r") as snippet:
+        readme_snippet = snippet.read()
+    return readme_snippet
+
+def create_readme_text(readme_dic):
+    """Creates the text to be written."""
+    print "  Creating readme_text..."
+    readme_text = grab_readme_snippet()
+    direcotries = readme_dic.keys()
+    for dur in direcotries:
+        print "    Creating readme entry for README in {}".format(dur)
+        # MORE STUFF HERE, to create the README text...
+    print "\n" + readme_text
+    return readme_text
+
+def create_readme(readme_text):
+    """Creates the README in the file's directory."""
+    curr_dir = os.path.abspath(os.path.dirname(__file__))
+    with open(join(curr_dir, "README.txt"), "w") as readme:
+        readme.write(readme_text)
+    return None
 
 def update_readmes():
     """
     Updates all README's in subdirectories, then the one in this file's
         directory.
     """
+    print "_"*79
+    print "\n                UPDATING README'S!!! :D"
     directories = discover_directories()
     generate_all_readmes(discover_readme_functions(directories))
-    readme_dic = gather_readmes(directories)
+    create_readme(create_readme_text(gather_readmes(directories)))
+    return None
 
 
 if __name__ == '__main__':
