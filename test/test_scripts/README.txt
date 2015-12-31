@@ -26,14 +26,15 @@ run_scripts_tests.py
 update_scripts_test_readme.py
         
     Description:
-        Updates README.txt file in current directory.
+        Updates README.txt file in the specified directory.
     
     Inputs:
-        Functions that share its directory. (discover_functions automatically)
+        Functions that are in the specified directory. 
+            discover_functions() detects them automatically.
     
     Outputs:
         README.txt file, with Scope&&Details listed.
-            Covers functions in current directory.
+            Covers functions in specified directory.
     
     Currently:
     

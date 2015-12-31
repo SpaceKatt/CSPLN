@@ -38,8 +38,8 @@ Done:
 
 
 def run_tests():
-    pass
+    """Runs all the testing for the scripts directory."""
     return None
-    
+
 if __name__ == "__main__":
     run_tests()

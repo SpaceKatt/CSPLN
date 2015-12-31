@@ -112,8 +112,9 @@ def copy_tiff_to_final_loc(tiff_path, out_path, file_name):
     shutil.copy(tiff_path, out_path)
     size_file = grab_file_size(out_path)
     md5 = md5check_grab(out_path)
-    print ("{tif} has been recorded as {fil}".format(
-             tif=grab_filename_from_path(tiff_path), fil=file_name))
+    dec_s = "{tif} has been recorded as {fil}"
+    print (dec_s.format(tif=grab_filename_from_path(tiff_path),
+                        fil=file_name))
     return md5, size_file
 
 def create_dirs(out_paths):

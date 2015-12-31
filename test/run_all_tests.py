@@ -35,13 +35,14 @@ To Do:
 
 Done:
 """
-from test_utility import run_utility_tests
-from test_scripts import run_scripts_tests
+from test.test_utility import run_utility_tests
+from test.test_scripts import run_scripts_tests
 
 def run_all_tests():
+    """Runs all the tests for the CSPLN project."""
     run_scripts_tests.run_tests()
     run_utility_tests.run_tests()
     return None
-    
+
 if __name__ == "__main__":
     run_all_tests()

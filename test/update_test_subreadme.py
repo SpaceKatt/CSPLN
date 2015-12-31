@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 <license>
 CSPLN_MaryKeelerEdition; Manages images to which notes can be added.
@@ -94,7 +95,7 @@ def create_readme(doc_dic, directory):
 
 def write_readme(r_text, directory):
     """Writes the readme!"""
-    readme_path = os.path.join(directory, 'README.txt')
+    readme_path = os.path.join(directory, 'subreadme.txt')
     with open(readme_path, 'w') as readme:
         readme.write(r_text)
     return None

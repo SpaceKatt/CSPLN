@@ -199,7 +199,7 @@ def populate_web_app(which_app, which_images, w_os):
         for a specific operating system.
     """
     string_print = "\n    Now populating {which} of the {oz} application."
-    print (string_print.format(which=which_app, oz=w_os))
+    print string_print.format(which=which_app, oz=w_os)
     print "_"*79 + "\n"
     check_images_exist(which_images)
     web2py = os.path.abspath(grab_web2py_script_path(which_app, w_os))

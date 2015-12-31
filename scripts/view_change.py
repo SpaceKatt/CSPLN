@@ -47,8 +47,8 @@ def gather_info(app_part, first_path):
     first_num = first_path[-8:-4]
     while first_num[0] == str(0) and len(first_num) > 1:
         first_num = first_num[1:]
-    print "    The first image number in this index is: {first}".format(
-                                                         first=first_num)
+    index_print = "    The first image number in this index is: {first}"
+    print index_print.format(first=first_num)
     return app_part, first_num
 
 def grab_view_path(which_app, w_os):
