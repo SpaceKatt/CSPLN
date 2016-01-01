@@ -36,21 +36,25 @@ Done:
     Resets the system so `./automate_everything.py` may be run
 """
 
-import shutil
+from shutil import rmtree
+from os.path import exists, abspath
 
-def grab_directories_deletion_paths():
-    """Contains directory paths to be deleted."""
-    web_apps = "../apps/web_apps"
-    images_processed = "../images/processed_images"
-    return web_apps, images_processed
-
-def delete_directories():
+def delete_directories(directory_dictionary):
     """Resets system so further files may be deleted."""
-    print "Resetting system...\n"
-    for path in grab_directories_deletion_paths():
+    print "\nResetting system...\n"
+    directory_keys = directory_dictionary.keys()
+    for directory in directory_keys:
+        path = abspath(directory_dictionary[directory])
         print "Deleteing {}.".format(path)
-        shutil.rmtree(path)
+        if exists(path):
+            rmtree(path)
+        else:
+            print "    But it doesn't exist..."
+    print "\nFinished resetting system...\n"
     return None
 
 if __name__ == '__main__':
-    delete_directories()
+    GENERATED_DIRS = {"web_apps":"../apps/web_apps",
+                      "images_processed":"../images/processed_images",
+                      "populators":"./populators"}
+    delete_directories(GENERATED_DIRS)

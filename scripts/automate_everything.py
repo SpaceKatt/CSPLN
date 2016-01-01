@@ -33,6 +33,8 @@ Outputs:
     Updates README
 
 Currently:
+    Rewriting scripts to avoid errors while calling from
+        different directories.
 
 To Do:
     Rewrite Description, Inputs, and Outputs.
@@ -41,6 +43,7 @@ To Do:
 Done:
 '''
 
+import reset_system
 import create_web_apps_win
 import create_web_apps_mac
 import create_web_apps_linux
@@ -53,20 +56,21 @@ import update_readme
 
 import os
 
-def discover_how_many_tifs():
+def discover_how_many_tifs(tif_dir):
     """Discovers how many tiffs are intended to be processed."""
-    dir_list = os.listdir('../images/raw_tiff')
+    curr_dir = os.path.abspath(os.path.dirname(__file__))
+    dir_list = os.listdir(os.path.normpath((os.path.join(curr_dir, tif_dir))))
     number_images_to_process = len(dir_list)
     return number_images_to_process
 
-def prepare_png_images():
+def prepare_png_images(adict):
     """
     Processes raw tiff images, creates png images for web_apps.
     Creates data for web_app database population.
     Decides how png images will be distributed between a number of apps.
     """
-    total_image_num = discover_how_many_tifs()
-    process_images.in_summary()
+    total_image_num = discover_how_many_tifs(adict["tif_path"])
+    process_images.in_summary(adict)
     how_many_apps, images_per_app = t_d.the_decider(total_image_num)
     return how_many_apps, images_per_app
 
@@ -86,16 +90,35 @@ def create_web_app_population(version_app, how_many_apps, images_per_app):
             v_c.replace_view(key_part, dict_image_p[key_part][0], w_os)
     return None
 
-def final(curr_version):
-    """Runs everything. Updates README.txt"""
-    how_many_apps, images_per_app = prepare_png_images()
+def final(adict):
+    """
+    Runs everything. Updates README.txt
+
+    adict - the automation dictionary
+        keys:
+            version - the current project version
+            generated_dirs - a dictionaries containing the directories
+                                 produced by `automate_everything.py`
+            tif_path - relative path to raw_tif files
+    """
+    reset_system.delete_directories(adict["generated_dirs"])
+    how_many_apps, images_per_app = prepare_png_images(adict)
     print '\nApps nessecary: ', how_many_apps
     print '\nImages per app: ', images_per_app, '\n'
-    create_web_app_population(curr_version, how_many_apps, images_per_app)
+    create_web_app_population(adict["version"], how_many_apps, images_per_app)
     print "\n    Finished, now updating readme...\n"
     update_readme.update_readme()
     return None
 
 if __name__ == "__main__":
-    TEST_VERSION = '00_01_02'
-    final(TEST_VERSION)
+    DIR_DICT = {"web_apps":"../apps/web_apps",
+                "images_processed":"../images/processed_images",
+                "populators":"./populators"}
+
+    AUTO_DICT = {"version":"00_01_02",
+                 "generated_dirs":DIR_DICT,
+                 "tif_path":"../images/raw_tiff",
+                 "out_path":"../images/processed_images/{pat}",
+                 "image_name_form":"M2JT{}",
+                 "meta_path":"../data"}
+    final(AUTO_DICT)
