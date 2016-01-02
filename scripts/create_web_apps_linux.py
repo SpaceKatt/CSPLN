@@ -40,6 +40,7 @@ Done:
 '''
 
 import os, sys, shutil
+from the_decider import resolve_relative_path as resolve_path
 
 def check_file_exist(path):
     """Check if the file at the given path exists."""
@@ -54,7 +55,7 @@ def grab_out_paths(number_apps):
     From the number of applications necessary,  create a list
         of pathnames where we will create linux applications.
     """
-    out_dir = '../apps/web_apps/linux/{pat}'
+    out_dir = resolve_path(__file__, '../apps/web_apps/linux/{pat}')
     project_part = 'P{}'
     out_paths = []
     for num in range(1, number_apps + 1):
@@ -65,8 +66,8 @@ def grab_out_paths(number_apps):
 
 def grab_web2py_frame():
     """Grab the path of the web2py framework and check its existence."""
-    webframe = '../apps/scaffolding/linux/web2py'
-    webdotpy = '../apps/scaffolding/common/web2py.py'
+    webframe = resolve_path(__file__, '../apps/scaffolding/linux/web2py')
+    webdotpy = resolve_path(__file__,'../apps/scaffolding/common/web2py.py')
     check_file_exist(webdotpy)
     check_file_exist(webframe)
     return webframe, webdotpy
@@ -74,6 +75,7 @@ def grab_web2py_frame():
 def grab_scaffold_app(current_version):
     """Grab the path of our scaffolding and check its existence."""
     mkever = '../apps/scaffolding/version/MKE_v{}'.format(current_version)
+    mkever = resolve_path(__file__, mkever)
     check_file_exist(mkever)
     return mkever
 
@@ -134,6 +136,7 @@ def deploy_scaffolding(version_now, num_apps):
     out_paths = copy_webframez(num_apps)
     new_paths = modify_out_paths(out_paths)
     copy_app(version_now, new_paths)
+    print "_"*79
     return None
 
 if __name__ == "__main__":

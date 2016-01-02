@@ -42,6 +42,7 @@ Done:
 '''
 
 import os, sys, shutil
+from the_decider import resolve_relative_path as resolve_path
 
 def check_file_exist(path):
     """Check if the file at the given path exists."""
@@ -56,7 +57,7 @@ def grab_out_paths(num_apps):
     From the number of applications necessary,  create a list
         of pathnames where we will create windows applications.
     """
-    out_dir = '../apps/web_apps/win/{pat}'
+    out_dir = resolve_path(__file__,'../apps/web_apps/win/{pat}')
     project_part = 'P{}'
     out_paths = []
     for num in range(1, num_apps + 1):
@@ -67,8 +68,8 @@ def grab_out_paths(num_apps):
 
 def grab_web2py_frame():
     """Grab the path of the web2py framework and check its existence."""
-    webframe = '../apps/scaffolding/win/web2py'
-    webdotpy = '../apps/scaffolding/common/web2py.py'
+    webframe = resolve_path(__file__,'../apps/scaffolding/win/web2py')
+    webdotpy = resolve_path(__file__,'../apps/scaffolding/common/web2py.py')
     check_file_exist(webdotpy)
     check_file_exist(webframe)
     return webframe, webdotpy
@@ -76,6 +77,7 @@ def grab_web2py_frame():
 def grab_scaffold_app(version):
     """Grab the path of our scaffolding and check its existence."""
     mkever = '../apps/scaffolding/version/MKE_v{}'.format(version)
+    mkever = resolve_path(__file__, mkever)
     check_file_exist(mkever)
     return mkever
 
@@ -115,7 +117,7 @@ def grab_filename_from_path(in_path):
 
 def create_bat(out_path, num):
     """Creates a bat file to start the web2py server."""
-    mkebat = '../apps/scaffolding/common/MKE_PT_.bat'
+    mkebat = resolve_path(__file__, '../apps/scaffolding/common/MKE_PT_.bat')
     check_file_exist(mkebat)
     shutil.copy(mkebat, out_path)
     old_name = os.path.join(out_path, 'MKE_PT_.bat')
@@ -169,6 +171,7 @@ def deploy_scaffolding(version, num_apps):
     modify_webframez(out_paths, num_apps)
     new_paths = modify_out_paths(out_paths)
     copy_app(version, new_paths)
+    print "_"*79
     return None
 
 if __name__ == "__main__":

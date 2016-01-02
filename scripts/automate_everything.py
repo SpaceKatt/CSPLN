@@ -58,8 +58,7 @@ import os
 
 def discover_how_many_tifs(tif_dir):
     """Discovers how many tiffs are intended to be processed."""
-    curr_dir = os.path.abspath(os.path.dirname(__file__))
-    dir_list = os.listdir(os.path.normpath((os.path.join(curr_dir, tif_dir))))
+    dir_list = os.listdir(t_d.resolve_relative_path(__file__, tif_dir))
     number_images_to_process = len(dir_list)
     return number_images_to_process
 
@@ -71,23 +70,26 @@ def prepare_png_images(adict):
     """
     total_image_num = discover_how_many_tifs(adict["tif_path"])
     process_images.in_summary(adict)
-    how_many_apps, images_per_app = t_d.the_decider(total_image_num)
+    how_many_apps, images_per_app = t_d.the_decider(total_image_num, adict)
     return how_many_apps, images_per_app
 
-def create_web_app_population(version_app, how_many_apps, images_per_app):
+def create_web_app_population(adict, how_many_apps, images_per_app):
     """
     Creates web_apps for Linux, Windows, and Mac. (from scaffolding)
     Populates web_apps with png images and corresponding data.
     """
+    version_app = adict["version"]
     os_list = ['win', 'mac', 'linux']
     create_web_apps_win.deploy_scaffolding(version_app, how_many_apps)
     create_web_apps_mac.deploy_scaffolding(version_app, how_many_apps)
     create_web_apps_linux.deploy_scaffolding(version_app, how_many_apps)
-    dict_image_p = impcg.image_path_chunk_grabber(images_per_app)
+    proc_path = adict["out_path"]
+    dict_image_p = impcg.image_path_chunk_grabber(images_per_app, proc_path)
     for w_os in os_list:
-        for key_part in dict_image_p:
-            popu.populate_web_app(key_part, dict_image_p[key_part], w_os)
-            v_c.replace_view(key_part, dict_image_p[key_part][0], w_os)
+        for number in range(len(dict_image_p.keys())):
+            part = "P{}".format(number+1)
+            popu.populate_web_app(part, dict_image_p[part], w_os, adict)
+            v_c.replace_view(part, dict_image_p[part][0], w_os)
     return None
 
 def final(adict):
@@ -103,11 +105,10 @@ def final(adict):
     """
     reset_system.delete_directories(adict["generated_dirs"])
     how_many_apps, images_per_app = prepare_png_images(adict)
-    print '\nApps nessecary: ', how_many_apps
-    print '\nImages per app: ', images_per_app, '\n'
-    create_web_app_population(adict["version"], how_many_apps, images_per_app)
+    create_web_app_population(adict, how_many_apps, images_per_app)
     print "\n    Finished, now updating readme...\n"
-    update_readme.update_readme()
+    curr_dir = os.path.dirname(t_d.resolve_relative_path(__file__, "scripts"))
+    update_readme.update_readme(curr_dir)
     return None
 
 if __name__ == "__main__":
@@ -118,7 +119,8 @@ if __name__ == "__main__":
     AUTO_DICT = {"version":"00_01_02",
                  "generated_dirs":DIR_DICT,
                  "tif_path":"../images/raw_tiff",
-                 "out_path":"../images/processed_images/{pat}",
+                 "out_path":"../images/processed_images",
                  "image_name_form":"M2JT{}",
-                 "meta_path":"../data"}
+                 "meta_path":"../data",
+                 "pop_path":"./populators/{}_populator.py"}
     final(AUTO_DICT)

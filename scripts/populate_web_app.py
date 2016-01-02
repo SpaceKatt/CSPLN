@@ -55,6 +55,7 @@ Done:
 """
 
 import os, sys
+from the_decider import resolve_relative_path as resolve_path
 
 def check_file_exist(path):
     """Check if the file at the given path exists."""
@@ -88,18 +89,21 @@ def grab_web2py_script_path(which_app, w_os):
     """
     if w_os == 'mac':
         path_form = '../apps/web_apps/{os}/{app}/web2py/{maaa}/web2py.py'
+        path_form = resolve_path(__file__, path_form)
         extra = 'web2py.app/Contents/Resources'
         path = path_form.format(os=w_os, app=str(which_app), maaa=extra)
     else:
         path_form = '../apps/web_apps/{os}/{app}/web2py/web2py.py'
+        path_form = resolve_path(__file__, path_form)
         path = path_form.format(os=w_os, app=str(which_app))
     print "    web2py script path: {}\n".format(path)
     return path
 
-def grab_txt(image_name):
+def grab_txt(image_name, out_path):
     """Grabs metadata for a specified image and stores it as a dictionary."""
     import ast
-    image_path_form = '../images/processed_images/{name}/{name}.txt'
+    image_path_form = out_path + '/{name}/{name}.txt'
+    image_path_form = resolve_path(__file__, image_path_form)
     with open(image_path_form.format(name=image_name), 'r') as meta_f:
         dic_str = meta_f.read()
         dictionary = ast.literal_eval(dic_str)
@@ -111,20 +115,20 @@ def resolve_file_path(relative_path, ext):
     abs_path = os.path.abspath(path_interim)
     return abs_path
 
-def gather_png_info(image_path):
+def gather_png_info(image_path, out_path):
     """Retrieves and modifies png metadata, for further processing."""
     image_name_ext = grab_filename_from_path(image_path)
     image_name = image_name_ext[:-4]
-    meta_dict = grab_txt(image_name)
+    meta_dict = grab_txt(image_name, out_path)
     meta_dict['file'] = resolve_file_path(meta_dict['file'], '.png')
     return meta_dict
 
-def create_single_cmd(image_path):
+def create_single_cmd(image_path, out_path):
     """
     Creates a single command, which is used to put a single entry
         into a single database, for a specific application.
     """
-    png_info = gather_png_info(image_path)
+    png_info = gather_png_info(image_path, out_path)
     keys = png_info.keys()
     insert_form = '{field}={value}'
     insert_cmd = 'db.image.insert({stuff})'
@@ -154,7 +158,7 @@ def create_single_cmd(image_path):
     cmd = insert_cmd.format(stuff=insert_string)
     return cmd
 
-def create_cmds(web2py_script, which_images):
+def create_cmds(web2py_script, which_images, out_path):
     """
     Creates an initial command, a series of insert commands, and
         a final commit command. These are relevant to a list of images
@@ -164,17 +168,17 @@ def create_cmds(web2py_script, which_images):
     int_cmd = int_cmd.format(web2py_s=web2py_script)
     upload_cmds = []
     for image in which_images:
-        cmd = create_single_cmd(image)
+        cmd = create_single_cmd(image, out_path)
         upload_cmds.append(cmd)
     commit_cmd = 'db.commit()'
     return int_cmd, upload_cmds, commit_cmd
 
-def create_python_scripts(up_cmds, commit_cmd, which_app):
+def create_python_scripts(up_cmds, commit_cmd, which_app, pop_path):
     """
     Creates a script, from a series of commands,
         to be read by an interpreter.
     """
-    path_form = './populators/{}_populator.py'
+    path_form = resolve_path(__file__, pop_path)
     path = os.path.abspath(path_form.format(which_app))
     create_dirs(path_form[:-15])
     with open(path, 'w') as python_file:
@@ -193,7 +197,7 @@ def pass_cmds(int_cmd, py_pop):
     first.communicate()
     return None
 
-def populate_web_app(which_app, which_images, w_os):
+def populate_web_app(which_app, which_images, w_os, adict):
     """
     Runs everything, populates a single webapp with a set of images,
         for a specific operating system.
@@ -203,8 +207,10 @@ def populate_web_app(which_app, which_images, w_os):
     print "_"*79 + "\n"
     check_images_exist(which_images)
     web2py = os.path.abspath(grab_web2py_script_path(which_app, w_os))
-    int_cmd, up_cmds, commit_cmd = create_cmds(web2py, which_images)
-    py_pop = create_python_scripts(up_cmds, commit_cmd, which_app)
+    out_path = adict["out_path"]
+    pop_path = adict["pop_path"]
+    int_cmd, up_cmds, commit_cmd = create_cmds(web2py, which_images, out_path)
+    py_pop = create_python_scripts(up_cmds, commit_cmd, which_app, pop_path)
     pass_cmds(int_cmd, py_pop)
     return None
 
@@ -214,4 +220,6 @@ if __name__ == "__main__":
                     '../images/processed_images/M2JT0001/M2JT0001.png',
                     '../images/processed_images/M2JT0002/M2JT0002.png']
     W_OS = 'mac'
-    populate_web_app(WHICH_APP, WHICH_IMAGES, W_OS)
+    AUTO_DICT = {"out_path":"../images/processed_images",
+                 "pop_path":"./populators/{}_populator.py"}
+    populate_web_app(WHICH_APP, WHICH_IMAGES, W_OS, AUTO_DICT)

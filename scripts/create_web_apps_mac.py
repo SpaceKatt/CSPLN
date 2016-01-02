@@ -40,6 +40,7 @@ Done:
 '''
 
 import os, sys, shutil
+from the_decider import resolve_relative_path as resolve_path
 
 def check_file_exist(path):
     """Check if the file at the given path exists."""
@@ -54,7 +55,7 @@ def grab_out_paths(number_apps):
     From the number of applications necessary,  create a list
         of pathnames where we will create mac applications.
     """
-    out_dir = '../apps/web_apps/mac/{pat}'
+    out_dir = resolve_path(__file__, '../apps/web_apps/mac/{pat}')
     project_part = 'P{}'
     out_paths = []
     for num in range(1, number_apps + 1):
@@ -65,13 +66,14 @@ def grab_out_paths(number_apps):
 
 def grab_web2py_frame():
     """Grab the path of the web2py framework and check its existence."""
-    webframe = '../apps/scaffolding/mac/web2py'
+    webframe = resolve_path(__file__, '../apps/scaffolding/mac/web2py')
     check_file_exist(webframe)
     return webframe
 
 def grab_scaffold_app(version):
     """Grab the path of our scaffolding and check its existence."""
     mkever = '../apps/scaffolding/version/MKE_v{}'.format(version)
+    mkever = resolve_path(__file__, mkever)
     check_file_exist(mkever)
     return mkever
 
@@ -129,6 +131,7 @@ def deploy_scaffolding(current_version, num_apps):
     out_paths = copy_webframez(num_apps)
     new_paths = modify_out_paths(out_paths)
     copy_app(current_version, new_paths)
+    print "_"*79
     return None
 
 if __name__ == "__main__":

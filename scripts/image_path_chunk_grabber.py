@@ -36,11 +36,13 @@ Done:
 '''
 
 import os
+from the_decider import resolve_relative_path as resolve_path
 
-def grab_image_paths():
+def grab_image_paths(processed_path):
     """Returns a list of processed png image paths"""
     image_path_list = []
-    for root, dirs, files in os.walk("../images/processed_images",
+    processed_image_path = resolve_path(__file__, processed_path)
+    for root, dirs, files in os.walk(processed_image_path,
                                      topdown=False):
         del dirs
         for name in files:
@@ -54,6 +56,7 @@ def chunk_it_out(image_path_list, images_per_app):
         images that is specified by images_per_app.
     """
     array_list = []
+    image_path_list.sort()
     while len(image_path_list) > 0:
         array = []
         for _ in range(images_per_app):
@@ -64,12 +67,13 @@ def chunk_it_out(image_path_list, images_per_app):
         array_list.append(array)
     return array_list
 
-def image_path_chunk_grabber(images_per_app):
+def image_path_chunk_grabber(images_per_app, processed_image_path):
     """
     Assigns each array of image paths a key in a dictionary,
         which corresponds to which application the images will belong to.
     """
-    path_list = grab_image_paths()
+    path_list = grab_image_paths(processed_image_path)
+    path_list.sort()
     chunk_list = chunk_it_out(path_list, images_per_app)
     count = 0
     chunk_dict = {}

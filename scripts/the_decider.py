@@ -42,9 +42,32 @@ Done:
 '''
 import ast
 
-def grab_png_data():
+def resolve_relative_path(curr_file, rel_path):
+    """
+    This function returns the absolute path defined by a relative path,
+        and always relative from the file which calls this function.
+            curr_file - takes `__file__` as an argument.
+            rel_path  - is a relatively defined path which uses either 
+                            "/" or "\\" as separators, or both.
+    The call of abspath(...) in the return statement might be redundant.
+    """
+    from os.path import join, normpath, abspath, dirname
+    path_list = [dirname(curr_file)]
+    rel_path = normpath(rel_path)
+    if "/" in rel_path:
+        split_path = rel_path.split("/")
+    elif "\\" in rel_path:
+        split_path = rel_path.split("\\")
+    else:
+        split_path = [".", rel_path]
+    for splint in split_path:
+        path_list.append(splint)
+    path = reduce(lambda x, y: join(x, y), path_list)
+    return abspath(normpath(path))
+
+def grab_png_data(data_path):
     """Gathers png (processed images) size data."""
-    path = '../data/png_sizes.txt'
+    path = resolve_relative_path(__file__, data_path + '/png_sizes.txt')
     with open(path, 'r') as dict_file:
         dictionary = ast.literal_eval(dict_file.read())
         return dictionary
@@ -83,16 +106,24 @@ def apps_number(images_per_app, total_image_num):
         how_many_apps += 1
     return how_many_apps
 
-def the_decider(total_image_num):
+def the_decider(total_image_num, automation_dictionary):
     """
     Decides how many images each app should hold and how many apps to create.
     """
-    average = take_average(grab_png_data())
+    print "\n\n    Deciding how many images to put in how many apps..."
+    print "_"*79
+    data_path = automation_dictionary["meta_path"]
+    average = take_average(grab_png_data(data_path))
+    print "\n    Average image size: {} B.".format(average)
+    print "\n    Total number of Images: {}".format(total_image_num)
     images_per_app = how_many_images_fit(average, total_image_num)
     how_many_apps = apps_number(images_per_app, total_image_num)
+    print '\n    Apps nessecary: ', how_many_apps
+    print '\n    Images per app: ', images_per_app, '\n'
+    print "_"*79
     return how_many_apps, images_per_app
 
 if __name__ == "__main__":
     TOTAL_IMAGE_NUM = 659
-    HOW_MANY, IMAGES_PER = the_decider(TOTAL_IMAGE_NUM)
-    print 'How many apps: ', HOW_MANY, '\n', 'Images per app: ', IMAGES_PER
+    AUTO_DICT = {"meta_path":"../data"}
+    HOW_MANY, IMAGES_PER = the_decider(TOTAL_IMAGE_NUM, AUTO_DICT)

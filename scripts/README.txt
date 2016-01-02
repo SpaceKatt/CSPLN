@@ -1,5 +1,3 @@
-For higher level to-do-list, see './story.txt'.
-
 Scope:
     automate_everything.py
     create_web_apps_linux.py
@@ -36,6 +34,8 @@ automate_everything.py
         Updates README
     
     Currently:
+        Rewriting scripts to avoid errors while calling from
+            different directories.
     
     To Do:
         Rewrite Description, Inputs, and Outputs.
@@ -231,6 +231,7 @@ process_images.py
     Currently:
     
     To Do:
+        Update documentation -- especially clarify obscure function params.
     
     Done:
         Make text files produced in '../data' contain dictionaries, not lists.
@@ -313,19 +314,19 @@ the_decider.py
 update_readme.py
         
     Description:
-        Updates README.txt file in current directory.
+        Updates README.txt file in the specified directory.
     
     Inputs:
-        Functions that share its directory. (discover_functions automatically)
+        Functions that are in the specified directory.
+            discover_functions() detects them automatically.
     
     Outputs:
         README.txt file, with Scope&&Details listed.
-            Covers functions in current directory.
+            Covers functions in specified directory.
     
     Currently:
     
     To Do:
-        Include story.txt in the README.
     
     Done:
         Update readme file with current functions&&their docstrings.

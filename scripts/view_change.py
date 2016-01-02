@@ -38,6 +38,7 @@ Done:
 '''
 
 import os
+from the_decider import resolve_relative_path as resolve_path
 
 def gather_info(app_part, first_path):
     """
@@ -49,18 +50,21 @@ def gather_info(app_part, first_path):
         first_num = first_num[1:]
     index_print = "    The first image number in this index is: {first}"
     print index_print.format(first=first_num)
+    print "        Editing the view so the proper number is displayed..."
     return app_part, first_num
 
 def grab_view_path(which_app, w_os):
     """Grabs the path of the view file to be modified."""
     if w_os == 'mac':
         app_dir = '../apps/web_apps/{os}/{app}/web2py/{ext}/applications'
+        app_dir = resolve_path(__file__, app_dir)
         extra = 'web2py.app/Contents/Resources'
         app_dir = app_dir.format(os=w_os, app=which_app, ext=extra)
         file_loc = 'MKE_Static_Name/views/default/index.html'
         path = os.path.join(app_dir, file_loc)
     else:
         app_dir = '../apps/web_apps/{os}/{app}/web2py/applications'
+        app_dir = resolve_path(__file__, app_dir)
         app_dir = app_dir.format(os=w_os, app=which_app)
         file_loc = 'MKE_Static_Name/views/default/index.html'
         path = os.path.join(app_dir, file_loc)

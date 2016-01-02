@@ -1,4 +1,4 @@
-'''
+"""
 <license>
 CSPLN_MaryKeelerEdition; Manages images to which notes can be added.
 Copyright (C) 2015, Thomas Kercheval
@@ -18,48 +18,48 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ___________________________________________________________</license>
 
 Description:
-    Updates README.txt file in current directory.
+    Updates README.txt file in the specified directory.
 
 Inputs:
-    Functions that share its directory. (discover_functions automatically)
+    Functions that are in the specified directory.
+        discover_functions() detects them automatically.
 
 Outputs:
     README.txt file, with Scope&&Details listed.
-        Covers functions in current directory.
+        Covers functions in specified directory.
 
 Currently:
 
 To Do:
-    Include story.txt in the README.
 
 Done:
     Update readme file with current functions&&their docstrings.
-'''
+"""
 
 import os
 
-def discover_functions():
-    '''Discorvers python modules in current directory.'''
+def discover_functions(directory):
+    """Discorvers python modules in current directory."""
     function_names = []
-    curr_dir = os.listdir('.')
+    curr_dir = os.listdir(directory)
     for name in curr_dir:
         if name[-3:] == '.py':
             function_names.append(str(name))
     return function_names
 
-def grab_docstrings(fcn_names):
+def grab_docstrings(directory):
     """"Grabs the docstrings of all python modules specified."""
     import ast
     docstrings = {}
-    for name in fcn_names:
-        thing = ast.parse(''.join(open(name)))
+    for name in discover_functions(directory):
+        path_name = os.path.join(directory, name)
+        thing = ast.parse(''.join(open(path_name)))
         docstring = ast.get_docstring(thing)
         docstrings[name] = docstring
     return docstrings
 
-def create_readme():
+def create_readme(doc_dic, directory):
     """Strips off license statement, formats readme, returns readme text."""
-    end_lisence = "</license>"
     scope = '''Scope:
     {}'''
     details = '''Details:{}'''
@@ -67,15 +67,18 @@ def create_readme():
     detaillist = []
     scopestuff = ''
     detailstuff = ''
-
-    doc_dic = grab_docstrings(discover_functions())
+    # Now to create the contents of the README...
     scripts = doc_dic.keys()
     scripts.sort()
     for script in scripts:
-        print "Creating readme entry for: {}...".format(script)
+        print "    Creating readme entry for: {}...".format(script)
+        if doc_dic[script] == None:
+            print "        But it has no docstring..."
+            continue
         scopelist.append(script+'\n    ')
         docstring = doc_dic[script].replace('\n', '\n    ')
-        doc_index = docstring.find(end_lisence) + 11
+        doc_index = docstring.find("</license>") + 11
+        # Stripping off the license in the docstring...
         docstring = docstring[doc_index:]
         detaillist.append('\n\n'+script+'\n')
         detaillist.append('    '+docstring)
@@ -83,21 +86,26 @@ def create_readme():
         scopestuff += item
     for ano_item in detaillist:
         detailstuff += ano_item
+    # Now to put the contents in their correct place...
     readme = (scope.format(scopestuff[:-4]) + '\n'
               + details.format(detailstuff) + '\n')
-    return readme
+    # And write the README in its directory...
+    write_readme(readme, directory)
+    return None
 
-def write_readme(r_text):
+def write_readme(r_text, directory):
     """Writes the readme!"""
-    with open('./README.txt', 'w') as readme:
+    readme_path = os.path.join(directory, 'README.txt')
+    with open(readme_path, 'w') as readme:
         readme.write(r_text)
+    return None
 
-def update_readme():
-    """Updates the readme everytime `./automate_everything.py` is run."""
-    note = '''For higher level to-do-list, see \'./story.txt\'.\n\n'''
-    readme_text = create_readme()
-    readme_text = note + readme_text
-    write_readme(readme_text)
+def update_readme(directory):
+    """Updates the readme everytime this script is called."""
+    documentation_dict = grab_docstrings(directory)
+    create_readme(documentation_dict, directory)
+    return None
 
 if __name__ == "__main__":
-    update_readme()
+    CURR_DIR = os.path.abspath(os.path.dirname(__file__))
+    update_readme(CURR_DIR)

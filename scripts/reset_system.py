@@ -37,14 +37,15 @@ Done:
 """
 
 from shutil import rmtree
-from os.path import exists, abspath
+from os.path import exists
+from the_decider import resolve_relative_path as resolve_path
 
 def delete_directories(directory_dictionary):
     """Resets system so further files may be deleted."""
     print "\nResetting system...\n"
     directory_keys = directory_dictionary.keys()
     for directory in directory_keys:
-        path = abspath(directory_dictionary[directory])
+        path = resolve_path(__file__, directory_dictionary[directory])
         print "Deleteing {}.".format(path)
         if exists(path):
             rmtree(path)

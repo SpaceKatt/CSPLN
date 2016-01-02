@@ -35,6 +35,7 @@ Outputs:
 Currently:
 
 To Do:
+    Update documentation -- especially clarify obscure function params.
 
 Done:
     Make text files produced in '../data' contain dictionaries, not lists.
@@ -47,6 +48,7 @@ Done:
 import os, sys, shutil
 from PIL import Image
 import hashlib
+from the_decider import resolve_relative_path as resolve_path
 
 def check_file_exist(path):
     """Check if the file at the given path exists."""
@@ -59,8 +61,7 @@ def check_file_exist(path):
 def grab_file_paths(tif_dir):
     """Grabs the paths of images to be processed and puts them in a list."""
     image_path_list = []
-    curr_dir = os.path.abspath(os.path.dirname(__file__))
-    tif_path = os.path.join(curr_dir, tif_dir)
+    tif_path = resolve_path(__file__, tif_dir)
     for root, dirs, files in os.walk(tif_path, topdown=False):
         del dirs
         for name in files:
@@ -73,8 +74,7 @@ def grab_out_paths(image_path_list, adict):
 
 
     """
-    curr_dir = os.path.abspath(os.path.dirname(__file__))
-    out_dir = os.path.normpath((os.path.join(curr_dir, adict["out_path"])))
+    out_dir = resolve_path(__file__,  adict["out_path"] + "/{pat}")
     image_name_form = adict["image_name_form"]
     out_paths = []
     file_names = []
@@ -138,16 +138,14 @@ def write_image_meta(im_path, file_name, data):
         meta_stuff.write(str(data))
     return None
 
-def write_meta_data(data, adict):
+def write_meta_data(data, meta_path):
     """
     Records sizes of all the pngs/tiffs in files that can later
         be read as dictionaries.
     ../data/png_sizes.txt
     ../data/tif_sizes.txt
     """
-    curr_dir = os.path.abspath(os.path.dirname(__file__))
-    meta_path = adict["meta_path"] + "/{}.txt"
-    meta_path = os.path.normpath((os.path.join(curr_dir, meta_path)))
+    meta_path = resolve_path(__file__,  meta_path + "/{}.txt")
     keys = data.keys()
     for key in keys:
         with open(meta_path.format(key), 'w') as meta_file:
@@ -216,7 +214,7 @@ def in_summary(adict):
         tif_path - relative path to raw_tif files.
     """
     stuff = auto_rawr(adict)
-    write_meta_data(stuff, adict)
+    write_meta_data(stuff, adict["meta_path"])
     return None
 
 if __name__ == "__main__":
