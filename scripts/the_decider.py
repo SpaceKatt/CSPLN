@@ -47,7 +47,7 @@ def resolve_relative_path(curr_file, rel_path):
     This function returns the absolute path defined by a relative path,
         and always relative from the file which calls this function.
             curr_file - takes `__file__` as an argument.
-            rel_path  - is a relatively defined path which uses either 
+            rel_path  - is a relatively defined path which uses either
                             "/" or "\\" as separators, or both.
     The call of abspath(...) in the return statement might be redundant.
     """
@@ -62,7 +62,7 @@ def resolve_relative_path(curr_file, rel_path):
         split_path = [".", rel_path]
     for splint in split_path:
         path_list.append(splint)
-    path = reduce(lambda x, y: join(x, y), path_list)
+    path = reduce(join, path_list)
     return abspath(normpath(path))
 
 def grab_png_data(data_path):

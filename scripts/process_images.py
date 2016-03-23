@@ -145,7 +145,10 @@ def write_meta_data(data, meta_path):
     ../data/png_sizes.txt
     ../data/tif_sizes.txt
     """
-    meta_path = resolve_path(__file__,  meta_path + "/{}.txt")
+    meta_path = resolve_path(__file__,  meta_path)
+    if not os.path.exists(meta_path):
+        os.makedirs(meta_path)
+    meta_path += "/{}.txt"
     keys = data.keys()
     for key in keys:
         with open(meta_path.format(key), 'w') as meta_file:

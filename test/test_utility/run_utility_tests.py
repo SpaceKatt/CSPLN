@@ -34,7 +34,7 @@ To Do:
 Done:
 """
 
-import test.test_utility.test_color_bar_remover as t_c_b
+import test_utility.test_color_bar_remover as t_c_b
 
 def run_tests():
     """Runs all tests of utility functions."""

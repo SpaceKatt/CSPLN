@@ -19,8 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ___________________________________________________________</license>
 
 Description:
+    Unit test for ``
 
 Inputs:
+    
 
 Outputs:
 
@@ -30,3 +32,21 @@ To Do:
 
 Done:
 """
+
+from scripts import reset_system
+import script_testing_definitions
+
+def set_up(test_dict):
+    reset_system.delete_directories(test_dict["generated_dirs"])
+    return None
+    
+def tear_down(test_dict):
+    reset_system.delete_directories(test_dict["generated_dirs"])
+    return None
+    
+def test_process_images():
+    test_dict = script_testing_definitions.return_testing_dictionary()    
+    set_up(test_dict)
+    
+    tear_down(test_dict)
+    return None

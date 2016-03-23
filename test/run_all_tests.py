@@ -35,8 +35,9 @@ To Do:
 
 Done:
 """
-from test.test_utility import run_utility_tests
-from test.test_scripts import run_scripts_tests
+from __future__ import absolute_import
+from test_utility import run_utility_tests
+from test_scripts import run_scripts_tests
 
 def run_all_tests():
     """Runs all the tests for the CSPLN project."""

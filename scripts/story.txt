@@ -5,6 +5,16 @@ Current project status:
     Licensed
 
 Current activity:
+    Write unit tests for:
+        process_images.py
+        the_decider.py
+        create_web_apps_xxx.py
+        image_path_chunk_grabber.py
+        populate_web_app.py
+        view_change.py
+        reset_system.py
+    Write integration tests for:
+        automate_everything.py
 
 To-Do:
     Readme, include 'story.txt' file.

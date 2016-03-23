@@ -53,6 +53,21 @@ def delete_directories(directory_dictionary):
             print "    But it doesn't exist..."
     print "\nFinished resetting system...\n"
     return None
+    
+def delete_dirs_no_print(directory_dictionary):
+    """
+    Resets system so further files may be deleted.
+        Does not print status.
+    """
+    directory_keys = directory_dictionary.keys()
+    for directory in directory_keys:
+        path = resolve_path(__file__, directory_dictionary[directory])
+        if exists(path):
+            print "Deleteing {}.".format(path)
+            rmtree(path)
+        else:
+            pass
+    return None
 
 if __name__ == '__main__':
     GENERATED_DIRS = {"web_apps":"../apps/web_apps",

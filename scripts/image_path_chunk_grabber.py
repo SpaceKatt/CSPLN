@@ -84,6 +84,7 @@ def image_path_chunk_grabber(images_per_app, processed_image_path):
 
 if __name__ == "__main__":
     IMAGES_PER_APP = 66
-    CHUNKS = image_path_chunk_grabber(IMAGES_PER_APP)
+    PROCESSED_IMAGE_PATH = "../images/processed_images"
+    CHUNKS = image_path_chunk_grabber(IMAGES_PER_APP, PROCESSED_IMAGE_PATH)
     for part in CHUNKS:
         print part, '\n', CHUNKS[part], '\n'

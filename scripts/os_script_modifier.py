@@ -1,4 +1,4 @@
-'''
+r'''
 <license>
 CSPLN_MaryKeelerEdition; Manages images to which notes can be added.
 Copyright (C) 2015, Thomas Kercheval
