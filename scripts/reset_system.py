@@ -46,7 +46,7 @@ def delete_directories(directory_dictionary):
     directory_keys = directory_dictionary.keys()
     for directory in directory_keys:
         path = resolve_path(__file__, directory_dictionary[directory])
-        print "Deleteing {}.".format(path)
+        print "Deleteing `{}`.".format(path)
         if exists(path):
             rmtree(path)
         else:
@@ -63,7 +63,7 @@ def delete_dirs_no_print(directory_dictionary):
     for directory in directory_keys:
         path = resolve_path(__file__, directory_dictionary[directory])
         if exists(path):
-            print "Deleteing {}.".format(path)
+            print "Deleteing `{}`.".format(path)
             rmtree(path)
         else:
             pass

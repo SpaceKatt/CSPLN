@@ -37,6 +37,7 @@ Done:
 """
 
 import sys, os
+from filecmp import cmp
 from script_testing_definitions import return_testing_dictionary
 from script_testing_definitions import resolve_relative_path as resolve_path
 
@@ -49,10 +50,10 @@ import process_images, reset_system
 def set_up(test_dict):
     """Sets up the testing environment."""    
     print "Begining test of processing raw notebook images..."
+    print "\n        `process_images.py`"
     print "_"*79
     folderpath = FOLDERPATH + "/null"
     test_image_path = resolve_path(folderpath, test_dict["test_image_path"])
-    print test_image_path
     if not os.path.exists(test_image_path):
         sys.exit("Testing image does not exist!")
     reset_system.delete_dirs_no_print(test_dict["generated_dirs"])
@@ -65,12 +66,29 @@ def tear_down(test_dict):
     print "_"*79    
     return None
     
-def test_meta_existence(meta_path):
+def test_meta_existence(test_dict):
     """Checks the meta data for the test image."""
+    print "\nTesting validity of meta_data..."
+    meta_path = test_dict["test_meta_path"]
+    known_data = test_dict["test_known_data"]
+    known_png_info = resolve_path(__file__, known_data + "/png_sizes.txt")
+    known_tif_info = resolve_path(__file__, known_data + "/tif_sizes.txt")
+    test_png_info = resolve_path(__file__, meta_path + "/png_sizes.txt")
+    test_tif_info = resolve_path(__file__, meta_path + "/tif_sizes.txt")
+    assert(cmp(known_png_info, test_png_info))
+    print "    ...png info successfully recorded."
+    assert(cmp(known_tif_info, test_tif_info))
+    print "    ...tif info successfully recorded."
     return None
 
-def test_processed_image(processed_path):
+def test_processed_image(test_dict):
     """Checks the processed test image."""
+    print "\nTesting processed image's presence and naming validity..."
+    out_path = test_dict["test_processed_img"]
+    processed_image = os.listdir(out_path)[0]
+    proper_file_name = test_dict["image_name_form"].format("0000")
+    assert(processed_image == proper_file_name)
+    print "    ...passed with name `{}`.".format(proper_file_name)
     return None    
     
 def test_process_images():
@@ -79,6 +97,8 @@ def test_process_images():
     set_up(test_dict)
     try:
         process_images.in_summary(test_dict)
+        test_meta_existence(test_dict)
+        test_processed_image(test_dict)
     finally:
         tear_down(test_dict)
     return None

@@ -46,11 +46,14 @@ def return_testing_dictionary():
     test_dict = {"version":"00_01_02",
                  "generated_dirs":dir_dict,
                  "tif_path":"../test/test_images/test_raw_tif",
-                 "test_image_path":im_path,
                  "out_path":"../test/test_images/test_processed_images",
                  "image_name_form":"M2JT{}",
                  "meta_path":"../test/test_data",
-                 "pop_path":"../test/test_populators/{}_populator.py"}
+                 "pop_path":"../test/test_populators/{}_populator.py",
+                 "test_image_path":im_path,
+                 "test_known_data":"../test_images/test_known_data",
+                 "test_processed_img":"../test_images/test_processed_images",
+                 "test_meta_path":"../test_data"}
     return test_dict
 
 def resolve_relative_path(curr_file, rel_path):
