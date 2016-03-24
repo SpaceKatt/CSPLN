@@ -6,7 +6,6 @@ Current project status:
 
 Current activity:
     Write unit tests for:
-        process_images.py
         the_decider.py
         create_web_apps_xxx.py
         image_path_chunk_grabber.py
@@ -69,6 +68,8 @@ Done:
     Put smaller density *.tif files as examples on github,
         will make app easier to download and demonstrate.
     Prime numbers of images can now be processed.
+    Wrote unit tests for:
+        process_images.py
 
 Keep doing (for consistency):
     Have scaffolding version be a function input, this will make for
@@ -134,5 +135,11 @@ Keep doing (for consistency):
     Tests will also help document the structure of the code/problem
         solving steps so that it will be easier to pick back up from where I
         left off...
+
+24/Mar/2016
+    Writing unit tests for scripts.
+    Next project I work on I should write the tests before making components,
+        this would be helpful because it would force an understanding
+        of the necessary behavior of a component.
 
 </story>

@@ -47,14 +47,14 @@ import color_bar_remover as c_b # Import from utitity file.
 
 # Defining paths such that they many be defined relatively and called from
 #     a directory that is not their own.
-DIR_NAME = "test_images/test_processed_images"
+DIR_NAME = "test_utility/test_processed_images"
 TEST_IMAGE_DIR = os.path.abspath(os.path.join(BASEPATH, "..", DIR_NAME))
 IMAGE_DICT = {"path":TEST_IMAGE_DIR, "bar_size":31}
 TEST_PATH = DIR_NAME +"/M2JT0000.tif"
 TEST_IMAGE = os.path.abspath(os.path.join(BASEPATH, "..", TEST_PATH))
-GENERATED_NAME = "test_images/test_processed_wcb_images/M2JTwcb0000.tif"
+GENERATED_NAME = "test_utility/test_processed_wcb_images/M2JTwcb0000.tif"
 GENERATED_PATH = os.path.abspath(os.path.join(BASEPATH, "..", GENERATED_NAME))
-CROP_DIR = "test_images/test_processed_wcb_images"
+CROP_DIR = "test_utility/test_processed_wcb_images"
 CROP_IMAGE_DIR = os.path.abspath(os.path.join(BASEPATH, "..", CROP_DIR))
 
 def set_up():
@@ -64,6 +64,7 @@ def set_up():
     """
     print "Begining test of color bar removal from notebook images..."
     print "_"*79
+    print TEST_IMAGE
     if not os.path.exists(TEST_IMAGE):
         sys.exit("Test image does not exist!")
     if os.path.exists(CROP_IMAGE_DIR):

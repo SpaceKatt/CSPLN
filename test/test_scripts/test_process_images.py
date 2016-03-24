@@ -40,10 +40,9 @@ import sys, os
 from filecmp import cmp
 from script_testing_definitions import return_testing_dictionary
 from script_testing_definitions import resolve_relative_path as resolve_path
+from script_testing_definitions import add_import_path
+add_import_path()
 
-BASEPATH = os.path.dirname(__file__) # Path to this file.
-FOLDERPATH = resolve_path(BASEPATH, "../../scripts")
-sys.path.insert(0, FOLDERPATH) # Adding scripts file to system path.
 import process_images, reset_system
 
 
@@ -52,7 +51,8 @@ def set_up(test_dict):
     print "Begining test of processing raw notebook images..."
     print "\n        `process_images.py`"
     print "_"*79
-    folderpath = FOLDERPATH + "/null"
+    folderpath = resolve_path(__file__, "../../scripts")
+    folderpath += "/null" # Necessary for the resolve_path fnc
     test_image_path = resolve_path(folderpath, test_dict["test_image_path"])
     if not os.path.exists(test_image_path):
         sys.exit("Testing image does not exist!")
@@ -66,8 +66,23 @@ def tear_down(test_dict):
     print "_"*79    
     return None
     
-def test_meta_existence(test_dict):
-    """Checks the meta data for the test image."""
+def check_file_meta(test_dict):
+    """Checks the meta-dictionary for a single image."""
+    image_name = test_dict["image_name_form"].format("0000")    
+    known_data = resolve_path(__file__ , test_dict["test_known_data"])
+    known_data = os.path.join(known_data, image_name + ".txt")
+    test_meta = resolve_path(__file__ , test_dict["test_processed_img"])
+    test_meta = os.path.join(test_meta, image_name, image_name + ".txt")
+    with open(known_data, "r") as known:
+        with open(test_meta, "r") as test:
+            known_stuff = known.read()
+            test_stuff = test.read()
+            assert(known_stuff[-210:] == test_stuff[-210:])
+    print "    ...individual image meta data confirmed."
+    return None
+    
+def check_meta_existence(test_dict):
+    """Checks the meta data for the test images."""
     print "\nTesting validity of meta_data..."
     meta_path = test_dict["test_meta_path"]
     known_data = test_dict["test_known_data"]
@@ -79,16 +94,22 @@ def test_meta_existence(test_dict):
     print "    ...png info successfully recorded."
     assert(cmp(known_tif_info, test_tif_info))
     print "    ...tif info successfully recorded."
+    check_file_meta(test_dict)
     return None
 
-def test_processed_image(test_dict):
+def check_processed_image(test_dict):
     """Checks the processed test image."""
     print "\nTesting processed image's presence and naming validity..."
-    out_path = test_dict["test_processed_img"]
+    out_path = resolve_path(__file__, test_dict["test_processed_img"])
     processed_image = os.listdir(out_path)[0]
     proper_file_name = test_dict["image_name_form"].format("0000")
     assert(processed_image == proper_file_name)
     print "    ...passed with name `{}`.".format(proper_file_name)
+    file_list = os.listdir(os.path.join(out_path, proper_file_name))
+    assert(proper_file_name + ".png" in file_list)
+    print "    ...png image created."
+    assert(proper_file_name + ".tif" in file_list)
+    print "    ...tif image created."
     return None    
     
 def test_process_images():
@@ -97,8 +118,8 @@ def test_process_images():
     set_up(test_dict)
     try:
         process_images.in_summary(test_dict)
-        test_meta_existence(test_dict)
-        test_processed_image(test_dict)
+        check_meta_existence(test_dict)
+        check_processed_image(test_dict)
     finally:
         tear_down(test_dict)
     return None

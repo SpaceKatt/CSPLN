@@ -34,6 +34,7 @@ To Do:
 Done:
     Defined paths.
 """
+import sys
 
 def return_testing_dictionary():
     """Returns the dictionary to be used by all scripts testing."""
@@ -52,6 +53,7 @@ def return_testing_dictionary():
                  "pop_path":"../test/test_populators/{}_populator.py",
                  "test_image_path":im_path,
                  "test_known_data":"../test_images/test_known_data",
+                 "test_known_alt":"../test/test_images/test_known_data",
                  "test_processed_img":"../test_images/test_processed_images",
                  "test_meta_path":"../test_data"}
     return test_dict
@@ -78,3 +80,8 @@ def resolve_relative_path(curr_file, rel_path):
         path_list.append(splint)
     path = reduce(join, path_list)
     return abspath(normpath(path))
+    
+def add_import_path():
+    """Adds the import path for scripts directory."""
+    folderpath = resolve_relative_path(__file__, "../../scripts")
+    sys.path.insert(0, folderpath) # Adding scripts file to system path.
