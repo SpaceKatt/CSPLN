@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/SpaceKatt/CSPLN.svg?branch=master)](https://travis-ci.org/SpaceKatt/CSPLN)
+
 Project Objective:
     From a set of images, create a set of full-stack web applications to
         host said images.
