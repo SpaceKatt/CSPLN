@@ -1,7 +1,7 @@
-'''
+r'''
 <license>
 CSPLN_MaryKeelerEdition; Manages images to which notes can be added.
-Copyright (C) 2015, Thomas Kercheval
+Copyright (C) 2015-2016, Thomas Kercheval
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -79,10 +79,14 @@ def create_web_app_population(adict, how_many_apps, images_per_app):
     Populates web_apps with png images and corresponding data.
     """
     version_app = adict["version"]
+    app_path = adict["app_path"]
     os_list = ['win', 'mac', 'linux']
-    create_web_apps_win.deploy_scaffolding(version_app, how_many_apps)
-    create_web_apps_mac.deploy_scaffolding(version_app, how_many_apps)
-    create_web_apps_linux.deploy_scaffolding(version_app, how_many_apps)
+    create_web_apps_win.deploy_scaffolding(version_app, how_many_apps,
+                                           app_path)
+    create_web_apps_mac.deploy_scaffolding(version_app, how_many_apps,
+                                           app_path)
+    create_web_apps_linux.deploy_scaffolding(version_app, how_many_apps,
+                                             app_path)
     proc_path = adict["out_path"]
     dict_image_p = impcg.image_path_chunk_grabber(images_per_app, proc_path)
     for w_os in os_list:
@@ -122,5 +126,6 @@ if __name__ == "__main__":
                  "out_path":"../images/processed_images",
                  "image_name_form":"M2JT{}",
                  "meta_path":"../data",
-                 "pop_path":"./populators/{}_populator.py"}
+                 "pop_path":"./populators/{}_populator.py",
+                 "app_path":"../apps/web_apps/{os}/{pat}"}
     final(AUTO_DICT)

@@ -2,7 +2,7 @@
 r"""
 <license>
 CSPLN_MaryKeelerEdition; Manages images to which notes can be added.
-Copyright (C) 2015, Thomas Kercheval
+Copyright (C) 2015-2016, Thomas Kercheval
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,12 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ___________________________________________________________</license>
 
 Description:
-    Unit test for `process_images.py`.
-    Checks to see that the image is processed correctly,
-        and that the meta data is written for the image.
+    Unit test for `.py`.
 
 Inputs:
-    `../../scripts/process_images.py`
+    `../../.py`
 
 Outputs:
     Test results.
@@ -46,23 +44,23 @@ import reset_system
 
 
 def set_up(test_dict):
-    """Sets up the testing environment."""    
+    """Sets up the testing environment."""
     print "Begining test of X..."
     print "\n        `X.py`"
     print "_"*79
     reset_system.delete_dirs_no_print(test_dict["generated_dirs"])
     return None
-    
+
 def tear_down(test_dict):
     """Tears down the testing environment."""
     print "\nEnding test of X...\n"
     reset_system.delete_dirs_no_print(test_dict["generated_dirs"])
-    print "_"*79    
+    print "_"*79
     return None
 
 def test_X():
     """Tests the X component."""
-    test_dict = return_testing_dictionary()    
+    test_dict = return_testing_dictionary()
     set_up(test_dict)
     try:
         pass

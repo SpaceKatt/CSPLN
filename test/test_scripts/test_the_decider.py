@@ -35,30 +35,27 @@ To Do:
 Done:
 """
 
-import sys, os
-from filecmp import cmp
 from script_testing_definitions import return_testing_dictionary
-from script_testing_definitions import resolve_relative_path as resolve_path
 from script_testing_definitions import add_import_path
 add_import_path()
 
 import the_decider, reset_system
 
 def set_up(test_dict):
-    """Sets up the testing environment."""    
+    """Sets up the testing environment."""
     print "Begining test of `the_decider`..."
     print "\n        `the_decider.py`"
     print "_"*79
     reset_system.delete_dirs_no_print(test_dict["generated_dirs"])
     return None
-    
+
 def tear_down(test_dict):
     """Tears down the testing environment."""
     print "\nEnding test of `the_decider`...\n"
     reset_system.delete_dirs_no_print(test_dict["generated_dirs"])
-    print "_"*79    
+    print "_"*79
     return None
-    
+
 def validate_results(how_many, images_per_app):
     """
     Check to make sure that the_decider not only does not reccomend
@@ -66,13 +63,13 @@ def validate_results(how_many, images_per_app):
         does not reccomend too many applications.
     """
     print "Testing allocation of images into applications..."
-    assert(how_many == images_per_app == 1)
+    assert how_many == images_per_app == 1
     print "    ...the correct allocation was given."
     return None
 
 def test_the_decider():
     """Tests `the_decider` component."""
-    test_dict = return_testing_dictionary()    
+    test_dict = return_testing_dictionary()
     set_up(test_dict)
     test_dict["meta_path"] = test_dict["test_known_alt"]
     try:

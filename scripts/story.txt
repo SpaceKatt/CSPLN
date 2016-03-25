@@ -6,7 +6,6 @@ Current project status:
 
 Current activity:
     Write unit tests for:
-        the_decider.py
         create_web_apps_xxx.py
         image_path_chunk_grabber.py
         populate_web_app.py
@@ -70,6 +69,7 @@ Done:
     Prime numbers of images can now be processed.
     Wrote unit tests for:
         process_images.py
+        the_decider.py
 
 Keep doing (for consistency):
     Have scaffolding version be a function input, this will make for

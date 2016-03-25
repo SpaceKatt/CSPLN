@@ -22,7 +22,7 @@ Description:
     Defines paths for testing.
 
 Inputs:
-    
+
 
 Outputs:
     Dictionary that contain paths necessary for testing.
@@ -41,7 +41,8 @@ def return_testing_dictionary():
     dir_dict = {"web_apps":"../test/test_apps/web_apps",
                 "images_processed":"../test/test_images/test_processed_images",
                 "populators":"../test/test_populators",
-                "test_meta":"../test/test_data"}
+                "test_meta":"../test/test_data",
+                "test_app_path":"../test/test_apps"}
     image_name = "000602456_MS_am_1632_339_0588.tif"
     im_path = "../test/test_images/test_raw_tif/" + image_name
     test_dict = {"version":"00_01_02",
@@ -51,11 +52,13 @@ def return_testing_dictionary():
                  "image_name_form":"M2JT{}",
                  "meta_path":"../test/test_data",
                  "pop_path":"../test/test_populators/{}_populator.py",
+                 "app_path":"../apps/web_apps/{os}/{pat}",
                  "test_image_path":im_path,
                  "test_known_data":"../test_images/test_known_data",
                  "test_known_alt":"../test/test_images/test_known_data",
                  "test_processed_img":"../test_images/test_processed_images",
-                 "test_meta_path":"../test_data"}
+                 "test_meta_path":"../test_data",
+                 "test_app_path":"../test/test_apps/{os}/{pat}"}
     return test_dict
 
 def resolve_relative_path(curr_file, rel_path):
@@ -80,7 +83,7 @@ def resolve_relative_path(curr_file, rel_path):
         path_list.append(splint)
     path = reduce(join, path_list)
     return abspath(normpath(path))
-    
+
 def add_import_path():
     """Adds the import path for scripts directory."""
     folderpath = resolve_relative_path(__file__, "../../scripts")

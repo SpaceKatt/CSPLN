@@ -1,7 +1,7 @@
-'''
+r'''
 <license>
 CSPLN_MaryKeelerEdition; Manages images to which notes can be added.
-Copyright (C) 2015, Thomas Kercheval
+Copyright (C) 2015-2016, Thomas Kercheval
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -50,18 +50,19 @@ def check_file_exist(path):
         sys.exit('File {} doesn\'t exist'.format(path))
     return None
 
-def grab_out_paths(number_apps):
+def grab_out_paths(number_apps, app_path):
     """
     From the number of applications necessary,  create a list
         of pathnames where we will create linux applications.
     """
-    out_dir = resolve_path(__file__, '../apps/web_apps/linux/{pat}')
+    out_dir = resolve_path(__file__, app_path)
     project_part = 'P{}'
+    os = "linux"
     out_paths = []
     for num in range(1, number_apps + 1):
         strin = project_part.format(str(num))
         print "{part}, preparing for generation.".format(part=strin)
-        out_paths.append(out_dir.format(pat=strin))
+        out_paths.append(out_dir.format(os=os, pat=strin))
     return out_paths
 
 def grab_web2py_frame():
@@ -79,14 +80,14 @@ def grab_scaffold_app(current_version):
     check_file_exist(mkever)
     return mkever
 
-def copy_webframez(number_apps):
+def copy_webframez(number_apps, app_path):
     """
     For each path where we intend to create a linux application,
         create a copy of the web2py framework and a modified copy
         of web2py.py.
     """
     webframe, webdotpy = grab_web2py_frame()
-    out_paths = grab_out_paths(number_apps)
+    out_paths = grab_out_paths(number_apps, app_path)
     for path in out_paths:
         shutil.copytree(webframe, os.path.join(path, 'web2py'))
         next_path = os.path.join(path, 'web2py')
@@ -127,13 +128,13 @@ def copy_app(version, out_paths):
         os.rename(old_name, new_name)
     return None
 
-def deploy_scaffolding(version_now, num_apps):
+def deploy_scaffolding(version_now, num_apps, app_path):
     """
     Deploys the web2py framework and the current version of our
         scaffolding, as many times as is necessary.
     """
     print "\n    Creating Linux applications...\n" + "_"*79
-    out_paths = copy_webframez(num_apps)
+    out_paths = copy_webframez(num_apps, app_path)
     new_paths = modify_out_paths(out_paths)
     copy_app(version_now, new_paths)
     print "_"*79
@@ -142,4 +143,5 @@ def deploy_scaffolding(version_now, num_apps):
 if __name__ == "__main__":
     NUM_APPS = 10
     VERSION = '00_01_02'
-    deploy_scaffolding(VERSION, NUM_APPS)
+    APP_PATH = '../apps/web_apps/{os}/{pat}'
+    deploy_scaffolding(VERSION, NUM_APPS, APP_PATH)
