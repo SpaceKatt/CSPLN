@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/SpaceKatt/CSPLN.svg?branch=master)](https://travis-ci.org/SpaceKatt/CSPLN)
+# CSPLN Project: [![Build Status](https://travis-ci.org/SpaceKatt/CSPLN.svg?branch=master)](https://travis-ci.org/SpaceKatt/CSPLN)
 
-# Project Objective:
+## Objective:
 
 From a set of images, create a set of full-stack web applications to
     host said images.
@@ -21,11 +21,11 @@ To create a set of web applications to host a set of images:
     # To run using other images, simply put them in './image/raw_tiff'
     #     then run automate_everything.py
 
-#### Main readme in scripts folder.
+##### Main readme in scripts folder.
 
-#### Main to-do-list in 'scripts\story.txt'.
+##### Main to-do-list in 'scripts\story.txt'.
 
-#### Based on the web2py framework: http://www.web2py.com/
+##### Based on the web2py framework: http://www.web2py.com/
 
 On windows, this might not work with powershell due to how path-strings
     are named. This problem can be solved by using a command-shell that
@@ -45,7 +45,7 @@ On windows, this might not work with powershell due to how path-strings
     > cd test
     > python run_all_tests.py
 
-## PYLINT:
+### PYLINT:
 
 To pylint all project files:
 
